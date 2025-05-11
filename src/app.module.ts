@@ -1,31 +1,30 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { PacienteModule } from './pacientes/pacientes.module';
-import { ProfesionalesModule } from './profesionales/profesionales.module';
-import { OrganizacionesModule } from './organizaciones/organizaciones.module';
-import { OrigenesModule } from './origenes/origenes.module';
-import { ObrasSocialesModule } from './obras-sociales/obras-sociales.module';
-import { DispositivosModule } from './dispositivos/dispositivos.module';
-import { DatosContactoModule } from './datos-contacto/datos-contacto.module';
-import { MembresiasModule } from './membresias/membresias.module';
-import { SistemasModule } from './sistemas/sistemas.module';
-import { TablaPacienteProfesionalModule } from './pacientes-profesionales/pacientes-profesionales.module';
+import { PacienteModule } from './api/pacientes/pacientes.module';
+import { ProfesionalesModule } from './api/profesionales/profesionales.module';
+import { OrganizacionesModule } from './api/organizaciones/organizaciones.module';
+import { OrigenesModule } from './api/origenes/origenes.module';
+import { ObrasSocialesModule } from './api/obras-sociales/obras-sociales.module';
+import { DispositivosModule } from './api/dispositivos/dispositivos.module';
+import { DatosContactoModule } from './api/datos-contacto/datos-contacto.module';
+import { MembresiasModule } from './api/membresias/membresias.module';
+import { SistemasModule } from './api/sistemas/sistemas.module';
+import { TablaPacienteProfesionalModule } from './api/pacientes-profesionales/pacientes-profesionales.module';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { sequelizeConfig } from './database/sequelize.config';
-import { CredencialModule } from './credenciales/credenciales.module';
-import { CapacitacionesModule } from './capacitaciones/capacitaciones.module';
-import { MarcasTrackerModule } from './marcas-tracker/marcas-tracker.module';
-import { CapacitadosModule } from './capacitados/capacitados.module';
-import { ContenidoUsuarioModule } from './contenido-usuario/contenido-usuario.module';
-import { DispositivosInteraccionModule } from './dispositivos-interaccion/dispositivos-interaccion.module';
-import { DuenoModule } from './duenos/duenos.module';
-import { SolicitudesCambioModule } from './solicitudes-cambio/solicitudes-cambio.module';
-import { TiposDispositivosModule } from './tipos-dispositivos/tipos-dispositivos.module';
-
+import { CredencialModule } from './api/credenciales/credenciales.module';
+import { CapacitacionesModule } from './api/capacitaciones/capacitaciones.module';
+import { ContenidoUsuarioModule } from './api/contenido-usuario/contenido-usuario.module';
+import { DispositivosInteraccionModule } from './api/dispositivos-interaccion/dispositivos-interaccion.module';
+import { DuenoModule } from './api/duenos/duenos.module';
+import { SolicitudesCambioModule } from './api/solicitudes-cambio/solicitudes-cambio.module';
+import { TiposDispositivosModule } from './api/tipos-dispositivos/tipos-dispositivos.module';
+import { ObraSocial } from './common/entities/obraSocial.entity';
+import { SeederService } from './database/seeder.service';
 @Module({
-  imports: [PacienteModule, ProfesionalesModule, OrganizacionesModule, OrigenesModule, ObrasSocialesModule, DispositivosModule, DatosContactoModule, MembresiasModule, SistemasModule, TablaPacienteProfesionalModule, SequelizeModule.forRoot(sequelizeConfig), CredencialModule, CapacitacionesModule, MarcasTrackerModule, CapacitadosModule, ContenidoUsuarioModule, DispositivosInteraccionModule, DuenoModule, SolicitudesCambioModule, TiposDispositivosModule],
+  imports: [PacienteModule, ProfesionalesModule, OrganizacionesModule, OrigenesModule, ObrasSocialesModule, DispositivosModule, DatosContactoModule, MembresiasModule, SistemasModule, TablaPacienteProfesionalModule, CredencialModule, CapacitacionesModule, ContenidoUsuarioModule, DispositivosInteraccionModule, DuenoModule, SolicitudesCambioModule, TiposDispositivosModule, SequelizeModule.forRoot(sequelizeConfig), SequelizeModule.forFeature([ObraSocial])],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, SeederService],
 })
 export class AppModule { }

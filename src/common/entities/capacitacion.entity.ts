@@ -6,7 +6,6 @@ import {
     ForeignKey,
     BelongsTo,
 } from 'sequelize-typescript';
-import { Capacitado } from './capacitado.entity';
 
 @Table({ tableName: 'capacitacion' })
 export class Capacitacion extends Model {
@@ -14,7 +13,7 @@ export class Capacitacion extends Model {
     declare id: number;
 
     @Column
-    capacitadora: string;
+    capacitador: string;
 
     @Column(DataType.DATE)
     fecha: Date;
@@ -25,10 +24,9 @@ export class Capacitacion extends Model {
     @Column(DataType.TEXT)
     nota: string;
 
-    @ForeignKey(() => Capacitado)
     @Column
     capacitado_id: number;
 
-    @BelongsTo(() => Capacitado)
-    capacitado: Capacitado;
+    @Column
+    tipo: string;
 }
