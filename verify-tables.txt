@@ -1,0 +1,17 @@
+Capacitacion = listo
+ContenidoUsuario = listo
+Credencial = listo | seguir el funcionamiento con DNI para ahorrar tiempo de desarrollo
+DatosContacto = listo
+Dispositivo = listo
+DispositivoDeInteraccion = listo
+Dueno = listo
+Membresia = listo | cambiar a programas y sistemas flexibles
+ObraSocial = listo
+Organizacion = listo
+Origen = listo
+Paciente = listo
+PacienteProfesional = listo
+Profesional = listo
+Sistema = listo | revisar el versionado como funcionaría con actualizaciones
+SolicitudDeCambio = listo
+TipoDispositivo = listo
