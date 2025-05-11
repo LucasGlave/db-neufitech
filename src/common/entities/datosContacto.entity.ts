@@ -17,13 +17,16 @@ export class DatosContacto extends Model {
     nombre_completo: string;
 
     @Column
-    direccion: string;
+    pais: string;
 
     @Column
     provincia: string;
 
     @Column
     ciudad: string;
+
+    @Column
+    direccion: string;
 
     @Column
     relacion: string;

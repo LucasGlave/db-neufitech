@@ -24,7 +24,7 @@ export class Credencial extends Model {
     @Column
     email: string;
 
-    @Column({ field: 'contraseña_encriptada' })
+    @Column
     contraseña: string;
 
     @ForeignKey(() => Membresia)

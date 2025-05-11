@@ -6,7 +6,6 @@ import {
     BelongsTo,
 } from 'sequelize-typescript';
 import { Paciente } from './paciente.entity';
-import { MarcaTracker } from './marcaTracker.entity';
 
 @Table({ tableName: 'dispositivo' })
 export class Dispositivo extends Model {
@@ -25,11 +24,4 @@ export class Dispositivo extends Model {
 
     @BelongsTo(() => Paciente)
     dueno: Paciente;
-
-    @ForeignKey(() => MarcaTracker)
-    @Column
-    marca_tracker_id: number;
-
-    @BelongsTo(() => MarcaTracker)
-    marcaTracker: MarcaTracker;
 }

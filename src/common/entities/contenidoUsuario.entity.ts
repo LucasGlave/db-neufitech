@@ -15,7 +15,7 @@ export class ContenidoUsuario extends Model {
 
     @ForeignKey(() => Dueno)
     @Column
-    duenio_id: number;
+    dueno_id: number;
 
     @BelongsTo(() => Dueno)
     dueno: Dueno;

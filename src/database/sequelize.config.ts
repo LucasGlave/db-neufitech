@@ -5,14 +5,12 @@ import { Organizacion } from '../common/entities/organizacion.entity';
 import { Origen } from '../common/entities/origen.entity';
 import { ObraSocial } from '../common/entities/obraSocial.entity';
 import { Dispositivo } from '../common/entities/dispositivo.entity';
-import { MarcaTracker } from '../common/entities/marcaTracker.entity';
 import { Capacitacion } from '../common/entities/capacitacion.entity';
 import { DatosContacto } from '../common/entities/datosContacto.entity';
 import { Membresia } from '../common/entities/membresia.entity';
 import { Sistema } from '../common/entities/sistema.entity';
 import { PacienteProfesional } from '../common/entities/pacienteProfesional.entity';
 import { Credencial } from 'src/common/entities/credencial.entity';
-import { Capacitado } from 'src/common/entities/capacitado.entity';
 import { ContenidoUsuario } from 'src/common/entities/contenidoUsuario.entity';
 import { DispositivoDeInteraccion } from 'src/common/entities/dispositivoInteraccion.entity';
 import { Dueno } from 'src/common/entities/dueno.entity';
@@ -28,14 +26,12 @@ export const sequelizeConfig: SequelizeModuleOptions = {
     database: 'neufitech',
     models: [
         Capacitacion,
-        Capacitado,
         ContenidoUsuario,
         Credencial,
         DatosContacto,
         Dispositivo,
         DispositivoDeInteraccion,
         Dueno,
-        MarcaTracker,
         Membresia,
         ObraSocial,
         Organizacion,
