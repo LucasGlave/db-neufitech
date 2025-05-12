@@ -4,8 +4,9 @@ import {
     Model,
     ForeignKey,
     BelongsTo,
+    HasMany,
 } from 'sequelize-typescript';
-import { Paciente } from './paciente.entity';
+import { Propietario } from './propietario.entity';
 
 @Table({ tableName: 'dispositivo' })
 export class Dispositivo extends Model {
@@ -18,10 +19,10 @@ export class Dispositivo extends Model {
     @Column
     modelo: string;
 
-    @ForeignKey(() => Paciente)
+    @ForeignKey(() => Propietario)
     @Column
-    dueno_id: number;
+    propietario_id: number;
 
-    @BelongsTo(() => Paciente)
-    dueno: Paciente;
+    @BelongsTo(() => Propietario)
+    propietario: Propietario;
 }

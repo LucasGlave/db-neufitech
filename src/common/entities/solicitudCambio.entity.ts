@@ -18,15 +18,9 @@ export class SolicitudDeCambio extends Model {
     @Column
     profesional_id: number;
 
-    @BelongsTo(() => Profesional)
-    profesional: Profesional;
-
     @ForeignKey(() => Paciente)
     @Column
     paciente_id: number;
-
-    @BelongsTo(() => Paciente)
-    paciente: Paciente;
 
     @Column
     tipo: string;
@@ -36,4 +30,13 @@ export class SolicitudDeCambio extends Model {
 
     @Column
     contenido: string;
+
+    @Column
+    estado: string;
+
+    @BelongsTo(() => Paciente)
+    paciente: Paciente;
+
+    @BelongsTo(() => Profesional)
+    profesional: Profesional;
 }

@@ -15,8 +15,8 @@ export class Sistema extends Model {
     declare version: string;
 
     @Column
-    cambios: string;
+    nombre: string;
 
     @HasMany(() => Membresia)
-    membresias: Membresia[];
+    membresias: Membresia;
 }
