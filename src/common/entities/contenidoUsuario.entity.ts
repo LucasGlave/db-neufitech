@@ -6,19 +6,19 @@ import {
     ForeignKey,
     BelongsTo,
 } from 'sequelize-typescript';
-import { Dueno } from './dueno.entity';
+import { Propietario } from './propietario.entity';
 
 @Table({ tableName: 'contenido_usuario' })
 export class ContenidoUsuario extends Model {
     @Column({ primaryKey: true, autoIncrement: true })
     declare id: number;
 
-    @ForeignKey(() => Dueno)
+    @ForeignKey(() => Propietario)
     @Column
-    dueno_id: number;
+    propietario_id: number;
 
-    @BelongsTo(() => Dueno)
-    dueno: Dueno;
+    @BelongsTo(() => Propietario)
+    propietario: Propietario;
 
     @Column
     tipo: string;

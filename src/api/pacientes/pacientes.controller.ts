@@ -11,8 +11,8 @@ export class PacienteController {
     }
 
     @Get(':id')
-    findOne(@Param('id') id: string) {
-        return this.pacienteService.findOne(+id);
+    async findOne(@Param('id') id: number) {
+        return this.pacienteService.findOne(id);
     }
 
     @Post()

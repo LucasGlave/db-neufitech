@@ -15,5 +15,5 @@ export class TipoDispositivo extends Model {
     tipo: string;
 
     @HasMany(() => DispositivoDeInteraccion)
-    dispositivosInteraccion: DispositivoDeInteraccion[];
+    dispositivosInteraccion: DispositivoDeInteraccion;
 }

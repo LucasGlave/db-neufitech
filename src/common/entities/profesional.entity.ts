@@ -9,8 +9,8 @@ import {
 } from 'sequelize-typescript';
 import { Organizacion } from './organizacion.entity';
 import { Paciente } from './paciente.entity';
-import { PacienteProfesional } from './pacienteProfesional.entity';
 import { SolicitudDeCambio } from './solicitudCambio.entity';
+import { PacienteProfesional } from './pacienteProfesional.entity';
 
 @Table({ tableName: 'profesional' })
 export class Profesional extends Model {

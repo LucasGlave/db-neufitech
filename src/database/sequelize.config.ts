@@ -9,39 +9,39 @@ import { Capacitacion } from '../common/entities/capacitacion.entity';
 import { DatosContacto } from '../common/entities/datosContacto.entity';
 import { Membresia } from '../common/entities/membresia.entity';
 import { Sistema } from '../common/entities/sistema.entity';
-import { PacienteProfesional } from '../common/entities/pacienteProfesional.entity';
-import { Credencial } from 'src/common/entities/credencial.entity';
 import { ContenidoUsuario } from 'src/common/entities/contenidoUsuario.entity';
 import { DispositivoDeInteraccion } from 'src/common/entities/dispositivoInteraccion.entity';
-import { Dueno } from 'src/common/entities/dueno.entity';
+import { Propietario } from 'src/common/entities/propietario.entity';
 import { SolicitudDeCambio } from 'src/common/entities/solicitudCambio.entity';
 import { TipoDispositivo } from 'src/common/entities/tipoDispositivo.entity';
+import { Programa } from 'src/common/entities/programa.entity';
+import { PacienteProfesional } from '../common/entities/pacienteProfesional.entity';
 
 export const sequelizeConfig: SequelizeModuleOptions = {
     dialect: 'postgres',
-    host: 'localhost',
-    port: 5432,
-    username: 'postgres',
-    password: 'postgres',
-    database: 'neufitech',
+    host: process.env.DB_HOST || 'localhost', // Use environment variable or fallback to localhost
+    port: parseInt(process.env.DB_PORT || '5432', 10), // Use environment variable or fallback to 5432
+    username: process.env.DB_USER || 'postgres', // Use environment variable or fallback to postgres
+    password: process.env.DB_PASSWORD || 'postgres', // Use environment variable or fallback to postgres
+    database: process.env.DB_NAME || 'neufitech', // Use environment variable or fallback to neufitech
     models: [
         Capacitacion,
         ContenidoUsuario,
-        Credencial,
         DatosContacto,
         Dispositivo,
         DispositivoDeInteraccion,
-        Dueno,
+        Propietario,
         Membresia,
         ObraSocial,
         Organizacion,
         Origen,
         Paciente,
-        PacienteProfesional,
         Profesional,
         Sistema,
         SolicitudDeCambio,
         TipoDispositivo,
+        Programa,
+        PacienteProfesional
     ],
     autoLoadModels: true,
     synchronize: true,

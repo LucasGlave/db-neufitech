@@ -13,17 +13,38 @@ import { SistemasModule } from './api/sistemas/sistemas.module';
 import { TablaPacienteProfesionalModule } from './api/pacientes-profesionales/pacientes-profesionales.module';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { sequelizeConfig } from './database/sequelize.config';
-import { CredencialModule } from './api/credenciales/credenciales.module';
 import { CapacitacionesModule } from './api/capacitaciones/capacitaciones.module';
 import { ContenidoUsuarioModule } from './api/contenido-usuario/contenido-usuario.module';
 import { DispositivosInteraccionModule } from './api/dispositivos-interaccion/dispositivos-interaccion.module';
-import { DuenoModule } from './api/duenos/duenos.module';
+import { PropietarioModule } from './api/propietarios/propietarios.module';
 import { SolicitudesCambioModule } from './api/solicitudes-cambio/solicitudes-cambio.module';
 import { TiposDispositivosModule } from './api/tipos-dispositivos/tipos-dispositivos.module';
 import { ObraSocial } from './common/entities/obraSocial.entity';
 import { SeederService } from './database/seeder.service';
+import { ProgramasModule } from './api/programas/programas.module';
+
 @Module({
-  imports: [PacienteModule, ProfesionalesModule, OrganizacionesModule, OrigenesModule, ObrasSocialesModule, DispositivosModule, DatosContactoModule, MembresiasModule, SistemasModule, TablaPacienteProfesionalModule, CredencialModule, CapacitacionesModule, ContenidoUsuarioModule, DispositivosInteraccionModule, DuenoModule, SolicitudesCambioModule, TiposDispositivosModule, SequelizeModule.forRoot(sequelizeConfig), SequelizeModule.forFeature([ObraSocial])],
+  imports: [
+    PacienteModule,
+    ProfesionalesModule,
+    OrganizacionesModule,
+    OrigenesModule,
+    ObrasSocialesModule,
+    DispositivosModule,
+    DatosContactoModule,
+    MembresiasModule,
+    SistemasModule,
+    TablaPacienteProfesionalModule,
+    CapacitacionesModule,
+    ContenidoUsuarioModule,
+    DispositivosInteraccionModule,
+    PropietarioModule,
+    SolicitudesCambioModule,
+    TiposDispositivosModule,
+    ProgramasModule,
+    SequelizeModule.forRoot(sequelizeConfig),
+    SequelizeModule.forFeature([ObraSocial]),
+  ],
   controllers: [AppController],
   providers: [AppService, SeederService],
 })

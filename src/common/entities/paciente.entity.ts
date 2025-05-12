@@ -6,18 +6,17 @@ import {
     HasMany,
     HasOne,
     BelongsTo,
-    ForeignKey,
     BelongsToMany,
+    ForeignKey,
 } from 'sequelize-typescript';
 import { DatosContacto } from './datosContacto.entity';
 import { ObraSocial } from './obraSocial.entity';
 import { Origen } from './origen.entity';
 import { Dispositivo } from './dispositivo.entity';
 import { Membresia } from './membresia.entity';
-import { Credencial } from './credencial.entity';
 import { Profesional } from './profesional.entity';
-import { PacienteProfesional } from './pacienteProfesional.entity';
 import { SolicitudDeCambio } from './solicitudCambio.entity';
+import { PacienteProfesional } from './pacienteProfesional.entity';
 
 @Table({ tableName: 'paciente' })
 export class Paciente extends Model {
@@ -54,7 +53,7 @@ export class Paciente extends Model {
 
     @ForeignKey(() => ObraSocial)
     @Column
-    obra_social: number;
+    obra_social_id: number;
 
     @BelongsTo(() => ObraSocial)
     obraSocial: ObraSocial;
@@ -62,14 +61,8 @@ export class Paciente extends Model {
     @HasMany(() => DatosContacto)
     datosContacto: DatosContacto[];
 
-    @HasMany(() => Dispositivo)
-    dispositivos: Dispositivo[];
-
     @HasOne(() => Membresia)
     membresia: Membresia;
-
-    @HasOne(() => Credencial)
-    credencial: Credencial;
 
     @BelongsToMany(() => Profesional, () => PacienteProfesional)
     profesionales: Profesional[];

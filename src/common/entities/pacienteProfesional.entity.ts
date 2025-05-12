@@ -1,9 +1,4 @@
-import {
-    Table,
-    Column,
-    Model,
-    ForeignKey,
-} from 'sequelize-typescript';
+import { Table, Column, Model, ForeignKey } from 'sequelize-typescript';
 import { Paciente } from './paciente.entity';
 import { Profesional } from './profesional.entity';
 
