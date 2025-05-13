@@ -25,9 +25,6 @@ export class SolicitudDeCambio extends Model {
     @Column
     tipo: string;
 
-    @Column(DataType.DATE)
-    fecha_subida: Date;
-
     @Column
     contenido: string;
 

@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { Paciente } from '../../common/entities/paciente.entity';
+import { PacienteType } from 'src/common/types';
 
 @Injectable()
 export class PacienteService {
@@ -17,11 +18,11 @@ export class PacienteService {
         return this.pacienteModel.findByPk(id);
     }
 
-    create(data: any) {
-        return this.pacienteModel.create(data);
+    create(data: PacienteType) {
+        return this.pacienteModel.create(data as Partial<Paciente>);
     }
 
-    update(id: number, data: any) {
+    update(id: number, data: PacienteType) {
         return this.pacienteModel.update(data, { where: { id } });
     }
 
