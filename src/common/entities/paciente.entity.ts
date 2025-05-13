@@ -12,7 +12,6 @@ import {
 import { DatosContacto } from './datosContacto.entity';
 import { ObraSocial } from './obraSocial.entity';
 import { Origen } from './origen.entity';
-import { Dispositivo } from './dispositivo.entity';
 import { Membresia } from './membresia.entity';
 import { Profesional } from './profesional.entity';
 import { SolicitudDeCambio } from './solicitudCambio.entity';
@@ -48,12 +47,12 @@ export class Paciente extends Model {
     @Column
     origen_id: number;
 
-    @BelongsTo(() => Origen)
-    origen: Origen;
-
     @ForeignKey(() => ObraSocial)
     @Column
     obra_social_id: number;
+
+    @BelongsTo(() => Origen)
+    origen: Origen;
 
     @BelongsTo(() => ObraSocial)
     obraSocial: ObraSocial;

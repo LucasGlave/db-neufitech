@@ -1,5 +1,7 @@
 import { Controller, Get, Post, Body, Param, Put, Delete } from '@nestjs/common';
 import { PacienteService } from './pacientes.service';
+import { pacienteFields } from 'src/common/types';
+import { validateRequiredFields } from 'src/utils/validateFields';
 
 @Controller('pacientes')
 export class PacienteController {
@@ -17,11 +19,13 @@ export class PacienteController {
 
     @Post()
     create(@Body() body) {
+        validateRequiredFields(body, pacienteFields);
         return this.pacienteService.create(body);
     }
 
     @Put(':id')
     update(@Param('id') id: string, @Body() body) {
+        validateRequiredFields(body, pacienteFields);
         return this.pacienteService.update(+id, body);
     }
 
