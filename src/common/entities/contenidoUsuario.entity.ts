@@ -17,9 +17,6 @@ export class ContenidoUsuario extends Model {
     @Column
     propietario_id: number;
 
-    @BelongsTo(() => Propietario)
-    propietario: Propietario;
-
     @Column
     tipo: string;
 
@@ -28,4 +25,7 @@ export class ContenidoUsuario extends Model {
 
     @Column(DataType.TEXT)
     contenido: string;
+
+    @BelongsTo(() => Propietario)
+    propietario: Propietario;
 }

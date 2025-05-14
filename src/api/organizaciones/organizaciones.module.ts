@@ -1,7 +1,11 @@
 import { Module } from '@nestjs/common';
-import { OrganizacionesService } from './organizaciones.service';
+import { SequelizeModule } from '@nestjs/sequelize';
+import { Organizacion } from '../../common/entities/organizacion.entity';
+import { OrganizacionService } from './organizaciones.service';
 
 @Module({
-  providers: [OrganizacionesService]
+  imports: [SequelizeModule.forFeature([Organizacion])],
+  providers: [OrganizacionService],
+  exports: [OrganizacionService],
 })
-export class OrganizacionesModule {}
+export class OrganizacionesModule { }

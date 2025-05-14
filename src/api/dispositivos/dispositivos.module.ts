@@ -1,7 +1,11 @@
 import { Module } from '@nestjs/common';
-import { DispositivosService } from './dispositivos.service';
+import { SequelizeModule } from '@nestjs/sequelize';
+import { Dispositivo } from '../../common/entities/dispositivo.entity';
+import { DispositivoService } from './dispositivos.service';
 
 @Module({
-  providers: [DispositivosService]
+  imports: [SequelizeModule.forFeature([Dispositivo])],
+  providers: [DispositivoService],
+  exports: [DispositivoService],
 })
-export class DispositivosModule {}
+export class DispositivosModule { }
