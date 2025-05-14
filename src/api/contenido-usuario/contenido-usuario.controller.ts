@@ -1,11 +1,21 @@
-import { Controller, Get, Post, Body, Param, Put, Delete } from '@nestjs/common';
+import {
+    Controller,
+    Get,
+    Post,
+    Body,
+    Param,
+    Put,
+    Delete,
+} from '@nestjs/common';
 import { ContenidoUsuarioService } from './contenido-usuario.service';
 import { contenidoUsuarioFields } from 'src/common/types';
 import { validateRequiredFields } from 'src/utils/validateFields';
 
 @Controller('contenido-usuario')
 export class ContenidoUsuarioController {
-    constructor(private readonly contenidoUsuarioService: ContenidoUsuarioService) { }
+    constructor(
+        private readonly contenidoUsuarioService: ContenidoUsuarioService,
+    ) {}
 
     @Get()
     findAll() {
