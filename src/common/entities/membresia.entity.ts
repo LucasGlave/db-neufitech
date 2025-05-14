@@ -16,15 +16,14 @@ export class Membresia extends Model {
     @Column({ primaryKey: true, autoIncrement: true })
     declare id: number;
 
-    @Column
+    @Column({ defaultValue: false })
     verificado: boolean;
 
     @ForeignKey(() => Paciente)
     @Column
     id_paciente: number;
 
-    @ForeignKey(() => Programa)
-    @Column(DataType.ARRAY(DataType.INTEGER))
+    @Column({ type: DataType.ARRAY(DataType.INTEGER), defaultValue: [] }) // Ensure this is defined as an array of integers
     programaIds: number[];
 
     @ForeignKey(() => Sistema)

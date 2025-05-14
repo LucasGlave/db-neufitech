@@ -37,6 +37,9 @@ export class Paciente extends Model {
     @Column
     direccion: string;
 
+    @Column
+    documento: number;
+
     @Column(DataType.DATE)
     fecha_nacimiento: Date;
 

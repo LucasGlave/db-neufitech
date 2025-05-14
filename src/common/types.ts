@@ -5,6 +5,7 @@ export interface PacienteType {
     provincia: string;
     ciudad: string;
     direccion: string;
+    documento: number;
     fecha_nacimiento: Date;
     diagnostico: string;
     origen_id: number;
@@ -17,6 +18,7 @@ export const pacienteFields = [
     "provincia",
     "ciudad",
     "direccion",
+    "documento",
     "fecha_nacimiento",
     "diagnostico",
     "origen_id",
@@ -194,10 +196,8 @@ export interface MembresiaType {
 }
 
 export const membresiaFields = [
-    "verificado",
     "id_paciente",
     "id_sistema",
-    "programaIds",
 ];
 
 export interface PropietarioType {

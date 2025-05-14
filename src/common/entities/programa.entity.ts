@@ -16,7 +16,6 @@ export class Programa extends Model {
     nombre: string;
 
     @ForeignKey(() => Membresia)
-    @Column
     membresia_id: number;
 
     @BelongsTo(() => Membresia)
