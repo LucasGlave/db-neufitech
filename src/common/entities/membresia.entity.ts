@@ -23,9 +23,6 @@ export class Membresia extends Model {
     @Column
     id_paciente: number;
 
-    @BelongsTo(() => Paciente)
-    paciente: Paciente;
-
     @ForeignKey(() => Programa)
     @Column(DataType.ARRAY(DataType.INTEGER))
     programaIds: number[];
@@ -33,6 +30,9 @@ export class Membresia extends Model {
     @ForeignKey(() => Sistema)
     @Column
     id_sistema: number;
+
+    @BelongsTo(() => Paciente)
+    paciente: Paciente;
 
     @BelongsTo(() => Sistema)
     sistema: Sistema;

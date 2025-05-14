@@ -1,7 +1,11 @@
 import { Module } from '@nestjs/common';
-import { SolicitudesCambioService } from './solicitudes-cambio.service';
+import { SequelizeModule } from '@nestjs/sequelize';
+import { SolicitudDeCambio } from '../../common/entities/solicitudCambio.entity';
+import { SolicitudDeCambioService } from './solicitudes-cambio.service';
 
 @Module({
-  providers: [SolicitudesCambioService]
+  imports: [SequelizeModule.forFeature([SolicitudDeCambio])],
+  providers: [SolicitudDeCambioService],
+  exports: [SolicitudDeCambioService],
 })
-export class SolicitudesCambioModule {}
+export class SolicitudesCambioModule { }

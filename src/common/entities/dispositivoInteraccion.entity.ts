@@ -17,7 +17,6 @@ export class DispositivoDeInteraccion extends Model {
     @Column
     tipo_de_dispositivo_id: number;
 
-
     @Column
     numero_serie: string;
 

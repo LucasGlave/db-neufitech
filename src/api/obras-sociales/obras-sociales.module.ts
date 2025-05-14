@@ -1,7 +1,11 @@
 import { Module } from '@nestjs/common';
-import { ObrasSocialesService } from './obras-sociales.service';
+import { SequelizeModule } from '@nestjs/sequelize';
+import { ObraSocial } from '../../common/entities/obraSocial.entity';
+import { ObraSocialService } from './obras-sociales.service';
 
 @Module({
-  providers: [ObrasSocialesService]
+  imports: [SequelizeModule.forFeature([ObraSocial])],
+  providers: [ObraSocialService],
+  exports: [ObraSocialService],
 })
-export class ObrasSocialesModule {}
+export class ObrasSocialesModule { }

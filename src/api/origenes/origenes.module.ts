@@ -1,7 +1,11 @@
 import { Module } from '@nestjs/common';
-import { OrigenesService } from './origenes.service';
+import { SequelizeModule } from '@nestjs/sequelize';
+import { Origen } from '../../common/entities/origen.entity';
+import { OrigenService } from './origenes.service';
 
 @Module({
-  providers: [OrigenesService]
+  imports: [SequelizeModule.forFeature([Origen])],
+  providers: [OrigenService],
+  exports: [OrigenService],
 })
-export class OrigenesModule {}
+export class OrigenesModule { }

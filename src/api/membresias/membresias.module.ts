@@ -1,7 +1,11 @@
 import { Module } from '@nestjs/common';
-import { MembresiasService } from './membresias.service';
+import { SequelizeModule } from '@nestjs/sequelize';
+import { Membresia } from '../../common/entities/membresia.entity';
+import { MembresiaService } from './membresias.service';
 
 @Module({
-  providers: [MembresiasService]
+  imports: [SequelizeModule.forFeature([Membresia])],
+  providers: [MembresiaService],
+  exports: [MembresiaService],
 })
-export class MembresiasModule {}
+export class MembresiasModule { }
