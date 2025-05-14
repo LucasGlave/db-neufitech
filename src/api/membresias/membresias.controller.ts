@@ -13,8 +13,8 @@ export class MembresiasController {
     }
 
     @Get(':id')
-    async findOne(@Param('id') id: number) {
-        return this.membresiaService.findOne(id);
+    async findOne(@Param('id') id: string) {
+        return this.membresiaService.findOne(+id);
     }
 
     @Post()

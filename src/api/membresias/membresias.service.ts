@@ -1,13 +1,16 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, BadRequestException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { Membresia } from '../../common/entities/membresia.entity';
+import { Sistema } from '../../common/entities/sistema.entity';
 import { MembresiaType } from 'src/common/types';
 
 @Injectable()
 export class MembresiaService {
     constructor(
         @InjectModel(Membresia)
-        private membresiaModel: typeof Membresia
+        private readonly membresiaModel: typeof Membresia,
+        @InjectModel(Sistema)
+        private readonly sistemaModel: typeof Sistema,
     ) { }
 
     findAll() {
@@ -18,7 +21,11 @@ export class MembresiaService {
         return this.membresiaModel.findByPk(id);
     }
 
-    create(data: MembresiaType) {
+    async create(data: MembresiaType) {
+        const sistema = await this.sistemaModel.findByPk(data.id_sistema);
+        if (!sistema) {
+            throw new BadRequestException('Invalid id_sistema: Sistema does not exist');
+        }
         return this.membresiaModel.create(data as Partial<Membresia>);
     }
 
