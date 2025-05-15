@@ -1,11 +1,19 @@
-import { Controller, Get, Post, Body, Param, Put, Delete } from '@nestjs/common';
+import {
+    Controller,
+    Get,
+    Post,
+    Body,
+    Param,
+    Put,
+    Delete,
+} from '@nestjs/common';
 import { ProgramaService } from './programas.service';
-import { programaFields } from 'src/common/types';
+import { programaFields } from 'src/common/types/programa.types';
 import { validateRequiredFields } from 'src/utils/validateFields';
 
 @Controller('programas.service')
 export class ProgramaController {
-    constructor(private readonly programaService: ProgramaService) { }
+    constructor(private readonly programaService: ProgramaService) {}
 
     @Get()
     findAll() {

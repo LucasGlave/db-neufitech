@@ -2,7 +2,6 @@ import {
     Table,
     Column,
     Model,
-    DataType,
     ForeignKey,
     BelongsTo,
 } from 'sequelize-typescript';
@@ -23,12 +22,15 @@ export class SolicitudDeCambio extends Model {
     paciente_id: number;
 
     @Column
-    tipo: string;
+    tipo: string; // ruta, rutina, nota
+
+    @Column
+    metodo: string; // agregar, eliminar, modificar
 
     @Column
     contenido: string;
 
-    @Column
+    @Column({ defaultValue: 'pendiente' }) // pendiente, aceptado, rechazado
     estado: string;
 
     @BelongsTo(() => Paciente)

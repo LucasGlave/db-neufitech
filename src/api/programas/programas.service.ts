@@ -1,14 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { Programa } from '../../common/entities/programa.entity';
-import { ProgramaType } from 'src/common/types';
+import { ProgramaType } from 'src/common/types/programa.types';
 
 @Injectable()
 export class ProgramaService {
     constructor(
         @InjectModel(Programa)
-        private programaModel: typeof Programa
-    ) { }
+        private programaModel: typeof Programa,
+    ) {}
 
     findAll() {
         return this.programaModel.findAll();

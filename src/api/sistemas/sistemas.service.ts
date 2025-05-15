@@ -1,14 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { Sistema } from '../../common/entities/sistema.entity';
-import { SistemaType } from 'src/common/types';
+import { SistemaType } from 'src/common/types/sistema.types';
 
 @Injectable()
 export class SistemaService {
     constructor(
         @InjectModel(Sistema)
-        private sistemaModel: typeof Sistema
-    ) { }
+        private sistemaModel: typeof Sistema,
+    ) {}
 
     findAll() {
         return this.sistemaModel.findAll();

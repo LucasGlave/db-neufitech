@@ -1,14 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { Dispositivo } from '../../common/entities/dispositivo.entity';
-import { DispositivoType } from 'src/common/types';
+import { DispositivoType } from 'src/common/types/dispositivo.types'; // Updated path
 
 @Injectable()
 export class DispositivoService {
     constructor(
         @InjectModel(Dispositivo)
-        private dispositivoModel: typeof Dispositivo
-    ) { }
+        private dispositivoModel: typeof Dispositivo,
+    ) {}
 
     findAll() {
         return this.dispositivoModel.findAll();

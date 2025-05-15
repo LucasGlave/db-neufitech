@@ -1,14 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { DatosContacto } from '../../common/entities/datosContacto.entity';
-import { DatosContactoType } from 'src/common/types';
+import { DatosContactoType } from 'src/common/types/datosContacto.types';
 
 @Injectable()
 export class DatosContactoService {
     constructor(
         @InjectModel(DatosContacto)
         private readonly datosContactoModel: typeof DatosContacto,
-    ) { }
+    ) {}
 
     findAll() {
         return this.datosContactoModel.findAll();

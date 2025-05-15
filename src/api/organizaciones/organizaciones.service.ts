@@ -1,14 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { Organizacion } from '../../common/entities/organizacion.entity';
-import { OrganizacionType } from 'src/common/types';
+import { OrganizacionType } from 'src/common/types/organizacion.types';
 
 @Injectable()
 export class OrganizacionService {
     constructor(
         @InjectModel(Organizacion)
-        private organizacionModel: typeof Organizacion
-    ) { }
+        private organizacionModel: typeof Organizacion,
+    ) {}
 
     findAll() {
         return this.organizacionModel.findAll();

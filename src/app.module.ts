@@ -10,13 +10,11 @@ import { DispositivosModule } from './api/dispositivos/dispositivos.module';
 import { DatosContactoModule } from './api/datos-contacto/datos-contacto.module';
 import { MembresiasModule } from './api/membresias/membresias.module';
 import { SistemasModule } from './api/sistemas/sistemas.module';
-import { TablaPacienteProfesionalModule } from './api/pacientes-profesionales/pacientes-profesionales.module';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { sequelizeConfig } from './database/sequelize.config';
 import { CapacitacionesModule } from './api/capacitaciones/capacitaciones.module';
 import { ContenidoUsuarioModule } from './api/contenido-usuario/contenido-usuario.module';
 import { DispositivosInteraccionModule } from './api/dispositivos-interaccion/dispositivos-interaccion.module';
-import { PropietarioModule } from './api/propietarios/propietarios.module';
 import { SolicitudesCambioModule } from './api/solicitudes-cambio/solicitudes-cambio.module';
 import { TiposDispositivosModule } from './api/tipos-dispositivos/tipos-dispositivos.module';
 import { ObraSocial } from './common/entities/obraSocial.entity';
@@ -24,28 +22,26 @@ import { SeederService } from './database/seeder.service';
 import { ProgramasModule } from './api/programas/programas.module';
 
 @Module({
-  imports: [
-    PacienteModule,
-    ProfesionalesModule,
-    OrganizacionesModule,
-    OrigenesModule,
-    ObrasSocialesModule,
-    DispositivosModule,
-    DatosContactoModule,
-    MembresiasModule,
-    SistemasModule,
-    TablaPacienteProfesionalModule,
-    CapacitacionesModule,
-    ContenidoUsuarioModule,
-    DispositivosInteraccionModule,
-    PropietarioModule,
-    SolicitudesCambioModule,
-    TiposDispositivosModule,
-    ProgramasModule,
-    SequelizeModule.forRoot(sequelizeConfig),
-    SequelizeModule.forFeature([ObraSocial]),
-  ],
-  controllers: [AppController],
-  providers: [AppService, SeederService],
+    imports: [
+        PacienteModule,
+        ProfesionalesModule,
+        OrganizacionesModule,
+        OrigenesModule,
+        ObrasSocialesModule,
+        DispositivosModule,
+        DatosContactoModule,
+        MembresiasModule,
+        SistemasModule,
+        CapacitacionesModule,
+        ContenidoUsuarioModule,
+        DispositivosInteraccionModule,
+        SolicitudesCambioModule,
+        TiposDispositivosModule,
+        ProgramasModule,
+        SequelizeModule.forRoot(sequelizeConfig),
+        SequelizeModule.forFeature([ObraSocial]),
+    ],
+    controllers: [AppController],
+    providers: [AppService, SeederService],
 })
-export class AppModule { }
+export class AppModule {}
