@@ -1,11 +1,19 @@
-import { Controller, Get, Post, Body, Param, Put, Delete } from '@nestjs/common';
+import {
+    Controller,
+    Get,
+    Post,
+    Body,
+    Param,
+    Put,
+    Delete,
+} from '@nestjs/common';
 import { SistemaService } from './sistemas.service';
-import { sistemaFields } from 'src/common/types';
+import { sistemaFields } from 'src/common/types/sistema.types';
 import { validateRequiredFields } from 'src/utils/validateFields';
 
 @Controller('sistemas')
 export class SistemaController {
-    constructor(private readonly sistemaService: SistemaService) { }
+    constructor(private readonly sistemaService: SistemaService) {}
 
     @Get()
     findAll() {

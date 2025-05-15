@@ -1,14 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { TipoDispositivo } from '../../common/entities/tipoDispositivo.entity';
-import { TipoDispositivoType } from 'src/common/types';
+import { TipoDispositivoType } from 'src/common/types/tipoDispositivo.types';
 
 @Injectable()
 export class TipoDispositivoService {
     constructor(
         @InjectModel(TipoDispositivo)
-        private tipoDispositivoModel: typeof TipoDispositivo
-    ) { }
+        private tipoDispositivoModel: typeof TipoDispositivo,
+    ) {}
 
     findAll() {
         return this.tipoDispositivoModel.findAll();
@@ -19,7 +19,9 @@ export class TipoDispositivoService {
     }
 
     create(data: TipoDispositivoType) {
-        return this.tipoDispositivoModel.create(data as Partial<TipoDispositivo>);
+        return this.tipoDispositivoModel.create(
+            data as Partial<TipoDispositivo>,
+        );
     }
 
     update(id: number, data: TipoDispositivoType) {

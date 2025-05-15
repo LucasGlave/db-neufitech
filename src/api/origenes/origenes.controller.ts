@@ -1,11 +1,19 @@
-import { Controller, Get, Post, Body, Param, Put, Delete } from '@nestjs/common';
+import {
+    Controller,
+    Get,
+    Post,
+    Body,
+    Param,
+    Put,
+    Delete,
+} from '@nestjs/common';
 import { OrigenService } from './origenes.service';
-import { origenFields } from 'src/common/types';
+import { origenFields } from 'src/common/types/origen.types';
 import { validateRequiredFields } from 'src/utils/validateFields';
 
 @Controller('origenes')
 export class OrigenesController {
-    constructor(private readonly origenService: OrigenService) { }
+    constructor(private readonly origenService: OrigenService) {}
 
     @Get()
     findAll() {

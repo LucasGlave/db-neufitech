@@ -1,14 +1,17 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { Paciente } from '../../common/entities/paciente.entity';
-import { PacienteType } from 'src/common/types';
+import { Propietario } from '../../common/entities/propietario.entity';
+import { PacienteType } from 'src/common/types/paciente.types';
 
 @Injectable()
 export class PacienteService {
     constructor(
         @InjectModel(Paciente)
-        private pacienteModel: typeof Paciente
-    ) { }
+        private pacienteModel: typeof Paciente,
+        @InjectModel(Propietario)
+        private propietarioModel: typeof Propietario,
+    ) {}
 
     findAll() {
         return this.pacienteModel.findAll();
@@ -18,8 +21,15 @@ export class PacienteService {
         return this.pacienteModel.findByPk(id);
     }
 
-    create(data: PacienteType) {
-        return this.pacienteModel.create(data as Partial<Paciente>);
+    async create(data: PacienteType) {
+        const paciente = await this.pacienteModel.create(
+            data as Partial<Paciente>,
+        );
+        await this.propietarioModel.create({
+            tipo: 'paciente',
+            foreign_key: paciente.id,
+        });
+        return paciente;
     }
 
     update(id: number, data: PacienteType) {

@@ -1,11 +1,26 @@
-import { Controller, Get, Post, Body, Param, Put, Delete } from '@nestjs/common';
+import {
+    Controller,
+    Get,
+    Post,
+    Body,
+    Param,
+    Put,
+    Delete,
+    Patch,
+} from '@nestjs/common';
 import { MembresiaService } from './membresias.service';
-import { membresiaFields } from 'src/common/types';
-import { validateRequiredFields } from 'src/utils/validateFields';
+import {
+    membresiaFields,
+    membresiaFieldsPatch,
+} from 'src/common/types/membresia.types';
+import {
+    validateOptionalFields,
+    validateRequiredFields,
+} from 'src/utils/validateFields';
 
 @Controller('membresias')
 export class MembresiasController {
-    constructor(private readonly membresiaService: MembresiaService) { }
+    constructor(private readonly membresiaService: MembresiaService) {}
 
     @Get()
     findAll() {
@@ -27,6 +42,12 @@ export class MembresiasController {
     update(@Param('id') id: string, @Body() body) {
         validateRequiredFields(body, membresiaFields);
         return this.membresiaService.update(+id, body);
+    }
+
+    @Patch(':id')
+    patch(@Param('id') id: string, @Body() body) {
+        validateOptionalFields(body, membresiaFieldsPatch);
+        return this.membresiaService.patch(+id, body);
     }
 
     @Delete(':id')
