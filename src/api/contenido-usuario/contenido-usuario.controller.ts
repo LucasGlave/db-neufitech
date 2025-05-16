@@ -9,10 +9,7 @@ import {
     Patch,
 } from '@nestjs/common';
 import { ContenidoUsuarioService } from './contenido-usuario.service';
-import {
-    contenidoUsuarioFields,
-    updateContenidoUsuarioFields,
-} from 'src/common/types';
+import { contenidoUsuarioFields } from 'src/common/types/contenidoUsuario.types';
 import { validateRequiredFields } from 'src/utils/validateFields';
 
 @Controller('contenido-usuario')

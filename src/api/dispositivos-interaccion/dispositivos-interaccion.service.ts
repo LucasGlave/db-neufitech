@@ -1,17 +1,19 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { DispositivoDeInteraccion } from '../../common/entities/dispositivoInteraccion.entity';
-import { DispositivoDeInteraccionType } from 'src/common/types';
+import { DispositivoDeInteraccionType } from 'src/common/types/dispositivoInteraccion.types'; // Updated path
 
 @Injectable()
 export class DispositivoInteraccionService {
     constructor(
         @InjectModel(DispositivoDeInteraccion)
-        private dispositivoInteraccionModel: typeof DispositivoDeInteraccion
-    ) { }
+        private dispositivoInteraccionModel: typeof DispositivoDeInteraccion,
+    ) {}
 
     findAll() {
-        return this.dispositivoInteraccionModel.findAll();
+        return this.dispositivoInteraccionModel.findAll({
+            order: [['id', 'ASC']],
+        });
     }
 
     findOne(id: number) {
@@ -19,7 +21,9 @@ export class DispositivoInteraccionService {
     }
 
     create(data: DispositivoDeInteraccionType) {
-        return this.dispositivoInteraccionModel.create(data as Partial<DispositivoDeInteraccion>);
+        return this.dispositivoInteraccionModel.create(
+            data as Partial<DispositivoDeInteraccion>,
+        );
     }
 
     update(id: number, data: DispositivoDeInteraccionType) {

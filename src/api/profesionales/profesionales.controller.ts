@@ -1,11 +1,19 @@
-import { Controller, Get, Post, Body, Param, Put, Delete } from '@nestjs/common';
+import {
+    Controller,
+    Get,
+    Post,
+    Body,
+    Param,
+    Put,
+    Delete,
+} from '@nestjs/common';
 import { ProfesionalService } from './profesionales.service';
-import { profesionalFields } from 'src/common/types';
+import { profesionalFields } from 'src/common/types/profesional.types';
 import { validateRequiredFields } from 'src/utils/validateFields';
 
 @Controller('profesionales')
 export class ProfesionalesController {
-    constructor(private readonly profesionalService: ProfesionalService) { }
+    constructor(private readonly profesionalService: ProfesionalService) {}
 
     @Get()
     findAll() {
@@ -32,5 +40,10 @@ export class ProfesionalesController {
     @Delete(':id')
     delete(@Param('id') id: string) {
         return this.profesionalService.delete(+id);
+    }
+
+    @Post(':id/asignar-paciente')
+    asignarProfesional(@Param('id') id: string, @Body() body) {
+        return this.profesionalService.asignarPaciente(+id, body.pacienteId);
     }
 }

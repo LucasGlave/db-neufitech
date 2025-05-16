@@ -1,32 +1,82 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, BadRequestException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { SolicitudDeCambio } from '../../common/entities/solicitudCambio.entity';
-import { SolicitudDeCambioType } from 'src/common/types';
+import {
+    SolicitudDeCambioEstadoEnum,
+    SolicitudDeCambioMetodoEnum,
+    SolicitudDeCambioTipoEnum,
+    SolicitudDeCambioType,
+} from 'src/common/types/solicitudDeCambio.types';
+import { PacienteService } from '../pacientes/pacientes.service';
+import { ProfesionalService } from '../profesionales/profesionales.service';
+import { validateEnum } from 'src/utils/validateFields';
 
 @Injectable()
 export class SolicitudDeCambioService {
     constructor(
         @InjectModel(SolicitudDeCambio)
-        private pacienteModel: typeof SolicitudDeCambio
-    ) { }
+        private solicitudCambioModel: typeof SolicitudDeCambio,
+        private pacienteService: PacienteService,
+        private profesionalService: ProfesionalService,
+    ) {}
 
     findAll() {
-        return this.pacienteModel.findAll();
+        return this.solicitudCambioModel.findAll({ order: [['id', 'ASC']] });
     }
 
     findOne(id: number) {
-        return this.pacienteModel.findByPk(id);
+        return this.solicitudCambioModel.findByPk(id);
     }
 
-    create(data: SolicitudDeCambioType) {
-        return this.pacienteModel.create(data as Partial<SolicitudDeCambio>);
+    async create(data: SolicitudDeCambioType) {
+        validateEnum(data.tipo, SolicitudDeCambioTipoEnum);
+        validateEnum(data.metodo, SolicitudDeCambioMetodoEnum);
+        let paciente = await this.pacienteService.findOne(data.paciente_id);
+        let profesional = await this.profesionalService.findOne(
+            data.profesional_id,
+        );
+        if (!paciente || !profesional) {
+            throw new BadRequestException(
+                'Invalid: paciente o profesional no existe',
+            );
+        }
+        return this.solicitudCambioModel.create(
+            data as Partial<SolicitudDeCambio>,
+        );
     }
 
     update(id: number, data: SolicitudDeCambioType) {
-        return this.pacienteModel.update(data, { where: { id } });
+        validateEnum(data.tipo, SolicitudDeCambioTipoEnum);
+        validateEnum(data.metodo, SolicitudDeCambioMetodoEnum);
+        return this.solicitudCambioModel.update(data, { where: { id } });
+    }
+
+    async patch(id: number, data: string) {
+        validateEnum(data, SolicitudDeCambioEstadoEnum);
+        const cambio = await this.solicitudCambioModel.findByPk(id);
+        if (!cambio) {
+            throw new BadRequestException('SolicitudDeCambio not found');
+        }
+        cambio.estado = data;
+        cambio.contenido = '';
+        return this.solicitudCambioModel.update(cambio, { where: { id } });
     }
 
     delete(id: number) {
-        return this.pacienteModel.destroy({ where: { id } });
+        return this.solicitudCambioModel.destroy({ where: { id } });
+    }
+
+    findByProfesional(profesionalId: number) {
+        return this.solicitudCambioModel.findAll({
+            where: { profesional_id: profesionalId },
+            order: [['id', 'ASC']],
+        });
+    }
+
+    findByPaciente(pacienteId: number) {
+        return this.solicitudCambioModel.findAll({
+            where: { paciente_id: pacienteId },
+            order: [['id', 'ASC']],
+        });
     }
 }

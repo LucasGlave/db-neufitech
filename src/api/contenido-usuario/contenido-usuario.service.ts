@@ -13,7 +13,7 @@ export class ContenidoUsuarioService {
     ) {}
 
     findAll() {
-        return this.contenidoUsuarioModel.findAll();
+        return this.contenidoUsuarioModel.findAll({ order: [['id', 'ASC']] });
     }
 
     findOne(id: number) {

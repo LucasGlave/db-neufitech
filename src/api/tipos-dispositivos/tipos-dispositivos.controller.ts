@@ -1,11 +1,21 @@
-import { Controller, Get, Post, Body, Param, Put, Delete } from '@nestjs/common';
+import {
+    Controller,
+    Get,
+    Post,
+    Body,
+    Param,
+    Put,
+    Delete,
+} from '@nestjs/common';
 import { TipoDispositivoService } from './tipos-dispositivos.service';
-import { tipoDispositivoFields } from 'src/common/types';
+import { tipoDispositivoFields } from 'src/common/types/tipoDispositivo.types';
 import { validateRequiredFields } from 'src/utils/validateFields';
 
 @Controller('tiposDispositivos')
 export class TipoDispositivoController {
-    constructor(private readonly tipoDispositivoService: TipoDispositivoService) { }
+    constructor(
+        private readonly tipoDispositivoService: TipoDispositivoService,
+    ) {}
 
     @Get()
     findAll() {
