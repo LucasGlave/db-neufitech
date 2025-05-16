@@ -11,7 +11,9 @@ export class DispositivoInteraccionService {
     ) {}
 
     findAll() {
-        return this.dispositivoInteraccionModel.findAll();
+        return this.dispositivoInteraccionModel.findAll({
+            order: [['id', 'ASC']],
+        });
     }
 
     findOne(id: number) {

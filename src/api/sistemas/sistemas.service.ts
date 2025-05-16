@@ -11,7 +11,7 @@ export class SistemaService {
     ) {}
 
     findAll() {
-        return this.sistemaModel.findAll();
+        return this.sistemaModel.findAll({ order: [['id', 'ASC']] });
     }
 
     findOne(id: number) {

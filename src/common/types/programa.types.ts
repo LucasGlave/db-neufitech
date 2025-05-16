@@ -4,4 +4,4 @@ export interface ProgramaType {
     membresia_id: number;
 }
 
-export const programaFields = ['nombre', 'membresia_id'];
+export const programaFields = ['nombre'];

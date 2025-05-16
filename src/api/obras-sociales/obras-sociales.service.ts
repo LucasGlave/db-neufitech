@@ -11,7 +11,7 @@ export class ObraSocialService {
     ) {}
 
     findAll() {
-        return this.obraSocialModel.findAll();
+        return this.obraSocialModel.findAll({ order: [['id', 'ASC']] });
     }
 
     findOne(id: number) {

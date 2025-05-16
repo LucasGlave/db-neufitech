@@ -7,10 +7,10 @@ export class ContenidoUsuarioService {
     constructor(
         @InjectModel(ContenidoUsuario)
         private readonly contenidoUsuarioModel: typeof ContenidoUsuario,
-    ) { }
+    ) {}
 
     findAll() {
-        return this.contenidoUsuarioModel.findAll();
+        return this.contenidoUsuarioModel.findAll({ order: [['id', 'ASC']] });
     }
 
     findOne(id: number) {

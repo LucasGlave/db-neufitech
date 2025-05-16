@@ -41,4 +41,9 @@ export class ProfesionalesController {
     delete(@Param('id') id: string) {
         return this.profesionalService.delete(+id);
     }
+
+    @Post(':id/asignar-paciente')
+    asignarProfesional(@Param('id') id: string, @Body() body) {
+        return this.profesionalService.asignarPaciente(+id, body.pacienteId);
+    }
 }
