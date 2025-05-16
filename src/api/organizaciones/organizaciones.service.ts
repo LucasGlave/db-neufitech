@@ -1,10 +1,14 @@
-import { Injectable } from '@nestjs/common';
+import {
+    BadRequestException,
+    Injectable,
+    NotFoundException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { Organizacion } from '../../common/entities/organizacion.entity';
 import { OrganizacionType } from 'src/common/types/organizacion.types';
 
 @Injectable()
-export class OrganizacionService {
+export class OrganizacionesService {
     constructor(
         @InjectModel(Organizacion)
         private organizacionModel: typeof Organizacion,
@@ -14,19 +18,40 @@ export class OrganizacionService {
         return this.organizacionModel.findAll({ order: [['id', 'ASC']] });
     }
 
-    findOne(id: number) {
-        return this.organizacionModel.findByPk(id);
+    async findOne(id: number) {
+        let org = await this.organizacionModel.findByPk(id);
+        if (!org) {
+            throw new NotFoundException('Organización no encontrada');
+        }
+        return org;
     }
 
     create(data: OrganizacionType) {
         return this.organizacionModel.create(data as Partial<Organizacion>);
     }
 
-    update(id: number, data: OrganizacionType) {
+    async update(id: number, data: OrganizacionType) {
+        const org = await this.organizacionModel.findByPk(id);
+        if (!org) {
+            throw new NotFoundException('Organización no encontrada');
+        }
         return this.organizacionModel.update(data, { where: { id } });
     }
 
-    delete(id: number) {
+    async delete(id: number) {
+        const org = await this.organizacionModel.findByPk(id);
+        if (!org) {
+            throw new NotFoundException('Organización no encontrada');
+        }
         return this.organizacionModel.destroy({ where: { id } });
+    }
+
+    async patch(id: number, data: any) {
+        const organizacion = await this.organizacionModel.findByPk(id);
+        if (!organizacion) {
+            throw new NotFoundException('Organización no encontrada');
+        }
+        Object.assign(organizacion, data);
+        return await this.organizacionModel.update(data, { where: { id } });
     }
 }
