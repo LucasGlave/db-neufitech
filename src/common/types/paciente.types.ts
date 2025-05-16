@@ -19,6 +19,5 @@ export const pacienteFields = [
     'direccion',
     'fecha_nacimiento',
     'diagnostico',
-    'origen_id',
     'obra_social_id',
 ];

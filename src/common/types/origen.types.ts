@@ -5,3 +5,5 @@ export interface OrigenType {
 }
 
 export const origenFields = ['tipo', 'foreign_key'];
+
+export const origenTipo = ['profesional', 'organizacion'];

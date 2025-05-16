@@ -19,11 +19,11 @@ import { PacienteProfesional } from '../common/entities/pacienteProfesional.enti
 
 export const sequelizeConfig: SequelizeModuleOptions = {
     dialect: 'postgres',
-    host: process.env.DB_HOST || 'localhost', // Use environment variable or fallback to localhost
-    port: parseInt(process.env.DB_PORT || '5432', 10), // Use environment variable or fallback to 5432
-    username: process.env.DB_USER || 'postgres', // Use environment variable or fallback to postgres
-    password: process.env.DB_PASSWORD || 'postgres', // Use environment variable or fallback to postgres
-    database: process.env.DB_NAME || 'neufitech', // Use environment variable or fallback to neufitech
+    host: process.env.DB_HOST || 'localhost',
+    port: parseInt(process.env.DB_PORT || '5432', 10),
+    username: process.env.DB_USER || 'postgres',
+    password: process.env.DB_PASSWORD || 'postgres',
+    database: process.env.DB_NAME || 'neufitech',
     models: [
         Capacitacion,
         ContenidoUsuario,
@@ -41,8 +41,9 @@ export const sequelizeConfig: SequelizeModuleOptions = {
         SolicitudDeCambio,
         TipoDispositivo,
         Programa,
-        PacienteProfesional
+        PacienteProfesional,
     ],
     autoLoadModels: true,
     synchronize: true,
+    logging: false,
 };

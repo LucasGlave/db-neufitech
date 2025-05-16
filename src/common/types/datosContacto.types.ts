@@ -20,5 +20,4 @@ export const datosContactoFields = [
     'relacion',
     'celular',
     'email',
-    'paciente_id',
 ];

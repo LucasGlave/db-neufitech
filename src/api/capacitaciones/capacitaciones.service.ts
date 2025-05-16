@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { Capacitacion } from '../../common/entities/capacitacion.entity';
-import { CapacitacionType } from 'src/common/types/capacitacion.types'; // Updated path
+import { CapacitacionType } from 'src/common/types/capacitacion.types';
 
 @Injectable()
 export class CapacitacionService {
@@ -11,7 +11,7 @@ export class CapacitacionService {
     ) {}
 
     findAll() {
-        return this.capacitacionModel.findAll();
+        return this.capacitacionModel.findAll({ order: [['id', 'ASC']] });
     }
 
     findOne(id: number) {

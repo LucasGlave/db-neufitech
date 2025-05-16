@@ -11,7 +11,7 @@ export class DispositivoService {
     ) {}
 
     findAll() {
-        return this.dispositivoModel.findAll();
+        return this.dispositivoModel.findAll({ order: [['id', 'ASC']] });
     }
 
     findOne(id: number) {

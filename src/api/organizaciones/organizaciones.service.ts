@@ -11,7 +11,7 @@ export class OrganizacionService {
     ) {}
 
     findAll() {
-        return this.organizacionModel.findAll();
+        return this.organizacionModel.findAll({ order: [['id', 'ASC']] });
     }
 
     findOne(id: number) {

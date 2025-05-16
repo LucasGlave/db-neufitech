@@ -21,7 +21,7 @@ export class SolicitudDeCambioService {
     ) {}
 
     findAll() {
-        return this.solicitudCambioModel.findAll();
+        return this.solicitudCambioModel.findAll({ order: [['id', 'ASC']] });
     }
 
     findOne(id: number) {
@@ -69,12 +69,14 @@ export class SolicitudDeCambioService {
     findByProfesional(profesionalId: number) {
         return this.solicitudCambioModel.findAll({
             where: { profesional_id: profesionalId },
+            order: [['id', 'ASC']],
         });
     }
 
     findByPaciente(pacienteId: number) {
         return this.solicitudCambioModel.findAll({
             where: { paciente_id: pacienteId },
+            order: [['id', 'ASC']],
         });
     }
 }

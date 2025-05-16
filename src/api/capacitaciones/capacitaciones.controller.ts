@@ -8,7 +8,7 @@ import {
     Delete,
 } from '@nestjs/common';
 import { CapacitacionService } from './capacitaciones.service';
-import { capacitacionFields } from 'src/common/types/capacitacion.types'; // Updated path
+import { capacitacionFields } from 'src/common/types/capacitacion.types';
 import { validateRequiredFields } from 'src/utils/validateFields';
 
 @Controller('capacitaciones')

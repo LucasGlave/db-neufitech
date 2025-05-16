@@ -23,7 +23,7 @@ export class Membresia extends Model {
     @Column
     id_paciente: number;
 
-    @Column({ type: DataType.ARRAY(DataType.INTEGER), defaultValue: [] }) // Ensure this is defined as an array of integers
+    @Column({ type: DataType.ARRAY(DataType.INTEGER), defaultValue: [] })
     programaIds: number[];
 
     @ForeignKey(() => Sistema)
@@ -35,7 +35,4 @@ export class Membresia extends Model {
 
     @BelongsTo(() => Sistema)
     sistema: Sistema;
-
-    @HasMany(() => Programa)
-    programas: Programa[];
 }

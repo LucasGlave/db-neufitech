@@ -4,10 +4,8 @@ import { AppService } from './app.service';
 import { PacienteModule } from './api/pacientes/pacientes.module';
 import { ProfesionalesModule } from './api/profesionales/profesionales.module';
 import { OrganizacionesModule } from './api/organizaciones/organizaciones.module';
-import { OrigenesModule } from './api/origenes/origenes.module';
 import { ObrasSocialesModule } from './api/obras-sociales/obras-sociales.module';
 import { DispositivosModule } from './api/dispositivos/dispositivos.module';
-import { DatosContactoModule } from './api/datos-contacto/datos-contacto.module';
 import { MembresiasModule } from './api/membresias/membresias.module';
 import { SistemasModule } from './api/sistemas/sistemas.module';
 import { SequelizeModule } from '@nestjs/sequelize';
@@ -26,10 +24,8 @@ import { ProgramasModule } from './api/programas/programas.module';
         PacienteModule,
         ProfesionalesModule,
         OrganizacionesModule,
-        OrigenesModule,
         ObrasSocialesModule,
         DispositivosModule,
-        DatosContactoModule,
         MembresiasModule,
         SistemasModule,
         CapacitacionesModule,
