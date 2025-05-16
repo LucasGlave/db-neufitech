@@ -20,9 +20,6 @@ export class ContenidoUsuario extends Model {
     @Column
     tipo: string;
 
-    @Column(DataType.DATE)
-    ultima_edicion: Date;
-
     @Column(DataType.TEXT)
     contenido: string;
 

@@ -13,17 +13,17 @@ export interface PacienteType {
 }
 
 export const pacienteFields = [
-    "nombre_completo",
-    "pais",
-    "provincia",
-    "ciudad",
-    "direccion",
-    "documento",
-    "fecha_nacimiento",
-    "diagnostico",
-    "origen_id",
-    "obra_social_id",
-]
+    'nombre_completo',
+    'pais',
+    'provincia',
+    'ciudad',
+    'direccion',
+    'documento',
+    'fecha_nacimiento',
+    'diagnostico',
+    'origen_id',
+    'obra_social_id',
+];
 
 export interface ProfesionalType {
     id: number;
@@ -38,14 +38,14 @@ export interface ProfesionalType {
 }
 
 export const profesionalFields = [
-    "nombre_completo",
-    "pais",
-    "provincia",
-    "ciudad",
-    "especialización",
-    "email",
-    "celular",
-]
+    'nombre_completo',
+    'pais',
+    'provincia',
+    'ciudad',
+    'especialización',
+    'email',
+    'celular',
+];
 
 export interface ProgramaType {
     id: number;
@@ -53,10 +53,7 @@ export interface ProgramaType {
     membresia_id: number;
 }
 
-export const programaFields = [
-    "nombre",
-    "membresia_id",
-]
+export const programaFields = ['nombre', 'membresia_id'];
 
 export interface OrganizacionType {
     id: number;
@@ -68,11 +65,11 @@ export interface OrganizacionType {
 }
 
 export const organizacionFields = [
-    "nombre",
-    "pais",
-    "provincia",
-    "ciudad",
-    "direccion",
+    'nombre',
+    'pais',
+    'provincia',
+    'ciudad',
+    'direccion',
 ];
 
 export interface ObraSocialType {
@@ -80,9 +77,7 @@ export interface ObraSocialType {
     nombre: string;
 }
 
-export const obraSocialFields = [
-    "nombre",
-];
+export const obraSocialFields = ['nombre'];
 
 export interface SistemaType {
     id: number;
@@ -90,10 +85,7 @@ export interface SistemaType {
     nombre: string;
 }
 
-export const sistemaFields = [
-    "version",
-    "nombre",
-];
+export const sistemaFields = ['version', 'nombre'];
 
 export interface SolicitudDeCambioType {
     id: number;
@@ -105,11 +97,11 @@ export interface SolicitudDeCambioType {
 }
 
 export const solicitudDeCambioFields = [
-    "profesional_id",
-    "paciente_id",
-    "tipo",
-    "contenido",
-    "estado",
+    'profesional_id',
+    'paciente_id',
+    'tipo',
+    'contenido',
+    'estado',
 ];
 
 export interface TipoDispositivoType {
@@ -117,9 +109,7 @@ export interface TipoDispositivoType {
     tipo: string;
 }
 
-export const tipoDispositivoFields = [
-    "tipo",
-];
+export const tipoDispositivoFields = ['tipo'];
 
 export interface DispositivoType {
     id: number;
@@ -128,11 +118,7 @@ export interface DispositivoType {
     propietario_id: number;
 }
 
-export const dispositivoFields = [
-    "dispositivo",
-    "modelo",
-    "propietario_id",
-];
+export const dispositivoFields = ['dispositivo', 'modelo', 'propietario_id'];
 
 export interface DispositivoDeInteraccionType {
     id: number;
@@ -142,24 +128,28 @@ export interface DispositivoDeInteraccionType {
 }
 
 export const dispositivoDeInteraccionFields = [
-    "tipo_de_dispositivo_id",
-    "numero_serie",
-    "propietario_id",
+    'tipo_de_dispositivo_id',
+    'numero_serie',
+    'propietario_id',
 ];
 
 export interface ContenidoUsuarioType {
     id: number;
     propietario_id: number;
     tipo: string;
-    ultima_edicion: Date;
     contenido: string;
 }
 
 export const contenidoUsuarioFields = [
-    "propietario_id",
-    "tipo",
-    "ultima_edicion",
-    "contenido",
+    'propietario_id',
+    'tipo_propietario',
+    'tipo',
+    'contenido',
+];
+
+export const updateContenidoUsuarioFields = [
+    'propietario_id',
+    'tipo_propietario',
 ];
 
 export interface DatosContactoType {
@@ -176,15 +166,15 @@ export interface DatosContactoType {
 }
 
 export const datosContactoFields = [
-    "nombre_completo",
-    "pais",
-    "provincia",
-    "ciudad",
-    "direccion",
-    "relacion",
-    "celular",
-    "email",
-    "paciente_id",
+    'nombre_completo',
+    'pais',
+    'provincia',
+    'ciudad',
+    'direccion',
+    'relacion',
+    'celular',
+    'email',
+    'paciente_id',
 ];
 
 export interface MembresiaType {
@@ -195,10 +185,7 @@ export interface MembresiaType {
     programaIds: number[];
 }
 
-export const membresiaFields = [
-    "id_paciente",
-    "id_sistema",
-];
+export const membresiaFields = ['id_paciente', 'id_sistema'];
 
 export interface PropietarioType {
     id: number;
@@ -206,10 +193,7 @@ export interface PropietarioType {
     foreign_key: number;
 }
 
-export const propietarioFields = [
-    "tipo",
-    "foreign_key",
-];
+export const propietarioFields = ['tipo', 'foreign_key'];
 
 export interface OrigenType {
     id: number;
@@ -217,10 +201,7 @@ export interface OrigenType {
     foreign_key: number;
 }
 
-export const origenFields = [
-    "tipo",
-    "foreign_key",
-];
+export const origenFields = ['tipo', 'foreign_key'];
 
 export interface CapacitacionType {
     id: number;
@@ -233,10 +214,10 @@ export interface CapacitacionType {
 }
 
 export const capacitacionFields = [
-    "capacitador",
-    "fecha",
-    "virtual",
-    "nota",
-    "capacitado_id",
-    "tipo",
+    'capacitador',
+    'fecha',
+    'virtual',
+    'nota',
+    'capacitado_id',
+    'tipo',
 ];

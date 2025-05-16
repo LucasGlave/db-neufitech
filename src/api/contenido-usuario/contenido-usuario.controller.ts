@@ -6,9 +6,13 @@ import {
     Param,
     Put,
     Delete,
+    Patch,
 } from '@nestjs/common';
 import { ContenidoUsuarioService } from './contenido-usuario.service';
-import { contenidoUsuarioFields } from 'src/common/types';
+import {
+    contenidoUsuarioFields,
+    updateContenidoUsuarioFields,
+} from 'src/common/types';
 import { validateRequiredFields } from 'src/utils/validateFields';
 
 @Controller('contenido-usuario')
@@ -27,20 +31,41 @@ export class ContenidoUsuarioController {
         return this.contenidoUsuarioService.findOne(id);
     }
 
+    @Get('propietario/:id/tipo-propietario/:tipo_propietario')
+    async findByUser(
+        @Param('id') id: number,
+        @Param('tipo_propietario') tipo_propietario: string,
+    ) {
+        return this.contenidoUsuarioService.findByUser(id, tipo_propietario);
+    }
+
+    @Get('propietario/:id/tipo-propietario/:tipo_propietario/contenido/:tipo')
+    async findByUserAndType(
+        @Param('id') id: number,
+        @Param('tipo') tipo: string,
+        @Param('tipo_propietario') tipo_propietario: string,
+    ) {
+        return this.contenidoUsuarioService.findByUserAndType(
+            id,
+            tipo_propietario,
+            tipo,
+        );
+    }
+
     @Post()
     create(@Body() body) {
         validateRequiredFields(body, contenidoUsuarioFields);
         return this.contenidoUsuarioService.create(body);
     }
 
-    @Put(':id')
-    update(@Param('id') id: string, @Body() body) {
+    @Put()
+    update(@Body() body) {
         validateRequiredFields(body, contenidoUsuarioFields);
-        return this.contenidoUsuarioService.update(+id, body);
+        return this.contenidoUsuarioService.update(body);
     }
 
-    @Delete(':id')
-    delete(@Param('id') id: string) {
-        return this.contenidoUsuarioService.delete(+id);
+    @Delete()
+    delete(@Body() body) {
+        return this.contenidoUsuarioService.delete(body);
     }
 }
