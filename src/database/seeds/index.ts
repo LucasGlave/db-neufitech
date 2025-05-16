@@ -2,6 +2,7 @@ import { seedObraSocial } from './obra-social.seed';
 import { seedOrigen } from './origen.seed';
 import { seedPaciente } from './paciente.seed';
 import { seedPrograma } from './programa.seed';
+import { seedPropietario } from './propietario.seed';
 import { seedSistema } from './sistema.seed';
 
 export const runAllSeeds = async () => {
@@ -10,4 +11,5 @@ export const runAllSeeds = async () => {
     await seedPaciente();
     await seedPrograma();
     await seedSistema();
+    await seedPropietario();
 };

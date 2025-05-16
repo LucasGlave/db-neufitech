@@ -4,7 +4,6 @@ export const seedSistema = async () => {
     const count = await Sistema.count();
     if (count === 0) {
         await Sistema.create({
-            id: 1,
             version: '1.0',
             nombre: 'Default Sistema',
         });
