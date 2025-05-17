@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { TipoDispositivo } from '../../common/entities/tipoDispositivo.entity';
 import { TipoDispositivoType } from 'src/common/types/tipoDispositivo.types';
@@ -24,8 +24,14 @@ export class TipoDispositivoService {
         );
     }
 
-    update(id: number, data: TipoDispositivoType) {
-        return this.tipoDispositivoModel.update(data, { where: { id } });
+    async update(id: number, data: TipoDispositivoType) {
+        const update = await this.tipoDispositivoModel.update(data, {
+            where: { id },
+        });
+        if (update[0] === 1) return this.tipoDispositivoModel.findByPk(id);
+        throw new BadRequestException(
+            `Failed to update TipoDispositivo with id ${id}.`,
+        );
     }
 
     delete(id: number) {

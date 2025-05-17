@@ -13,5 +13,5 @@ export class Programa extends Model {
     declare id: number;
 
     @Column
-    nombre: string;
+    declare nombre: string;
 }

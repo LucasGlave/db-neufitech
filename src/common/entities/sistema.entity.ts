@@ -1,9 +1,4 @@
-import {
-    Table,
-    Column,
-    Model,
-    HasMany,
-} from 'sequelize-typescript';
+import { Table, Column, Model, HasMany } from 'sequelize-typescript';
 import { Membresia } from './membresia.entity';
 
 @Table({ tableName: 'sistema' })

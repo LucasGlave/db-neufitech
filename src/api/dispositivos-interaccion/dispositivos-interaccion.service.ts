@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { DispositivoDeInteraccion } from '../../common/entities/dispositivoInteraccion.entity';
 import { DispositivoDeInteraccionType } from 'src/common/types/dispositivoInteraccion.types'; // Updated path
@@ -26,8 +26,15 @@ export class DispositivoInteraccionService {
         );
     }
 
-    update(id: number, data: DispositivoDeInteraccionType) {
-        return this.dispositivoInteraccionModel.update(data, { where: { id } });
+    async update(id: number, data: DispositivoDeInteraccionType) {
+        const update = await this.dispositivoInteraccionModel.update(data, {
+            where: { id },
+        });
+        if (update[0] === 1)
+            return this.dispositivoInteraccionModel.findByPk(id);
+        throw new BadRequestException(
+            `Failed to update Dispositivo de interaccion with id ${id}.`,
+        );
     }
 
     delete(id: number) {

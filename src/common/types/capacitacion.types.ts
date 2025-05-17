@@ -1,6 +1,6 @@
 export interface CapacitacionType {
     id: number;
-    capacitador: string;
+    capacitador_id: string;
     fecha: Date;
     virtual: boolean;
     nota: string;
@@ -9,10 +9,17 @@ export interface CapacitacionType {
 }
 
 export const capacitacionFields = [
-    'capacitador',
     'fecha',
     'virtual',
     'nota',
+    'capacitador_id',
     'capacitado_id',
     'tipo',
+];
+
+export const enumFieldsTipos = [
+    'paciente',
+    'profesional',
+    'organizacion',
+    'contacto',
 ];

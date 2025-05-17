@@ -40,15 +40,29 @@ export class SolicitudDeCambioService {
                 'Invalid: paciente o profesional no existe',
             );
         }
+        const theyreAssigned =
+            (await paciente.$has('profesionales', profesional.id)) ||
+            (await profesional.$has('pacientes', paciente.id));
+        if (!theyreAssigned) {
+            throw new BadRequestException(
+                'Invalid: paciente no asignado a profesional',
+            );
+        }
         return this.solicitudCambioModel.create(
             data as Partial<SolicitudDeCambio>,
         );
     }
 
-    update(id: number, data: SolicitudDeCambioType) {
+    async update(id: number, data: SolicitudDeCambioType) {
         validateEnum(data.tipo, SolicitudDeCambioTipoEnum);
         validateEnum(data.metodo, SolicitudDeCambioMetodoEnum);
-        return this.solicitudCambioModel.update(data, { where: { id } });
+        const update = await this.solicitudCambioModel.update(data, {
+            where: { id },
+        });
+        if (update[0] === 1) return this.solicitudCambioModel.findByPk(id);
+        throw new BadRequestException(
+            `Failed to update Solicitudes de cambio with id ${id}.`,
+        );
     }
 
     async patch(id: number, data: string) {
@@ -59,7 +73,10 @@ export class SolicitudDeCambioService {
         }
         cambio.estado = data;
         cambio.contenido = '';
-        return this.solicitudCambioModel.update(cambio, { where: { id } });
+        const update = await this.solicitudCambioModel.update(cambio, {
+            where: { id },
+        });
+        if (update[0] === 1) return this.solicitudCambioModel.findByPk(id);
     }
 
     delete(id: number) {

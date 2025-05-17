@@ -7,7 +7,5 @@ export const seedOrigen = async () => {
             { nombre_completo: 'SEED', tipo: 'organizacion', foreign_key: 1 },
         ]);
         console.log('[✔] Origen seed done');
-    } else {
-        console.log('[i] Origen already seeded');
     }
 };

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { ObraSocial } from '../../common/entities/obraSocial.entity';
 import { ObraSocialType } from 'src/common/types/obraSocial.types';
@@ -22,8 +22,14 @@ export class ObraSocialService {
         return this.obraSocialModel.create(data as Partial<ObraSocial>);
     }
 
-    update(id: number, data: ObraSocialType) {
-        return this.obraSocialModel.update(data, { where: { id } });
+    async update(id: number, data: ObraSocialType) {
+        const update = await this.obraSocialModel.update(data, {
+            where: { id },
+        });
+        if (update[0] === 1) return this.obraSocialModel.findByPk(id);
+        throw new BadRequestException(
+            `Failed to update Obra social with id ${id}.`,
+        );
     }
 
     delete(id: number) {

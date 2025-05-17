@@ -11,7 +11,5 @@ export const seedPrograma = async () => {
             { nombre: 'teclado-ia' },
         ]);
         console.log('[✔] Programa seed done');
-    } else {
-        console.log('[i] Programa already seeded');
     }
 };

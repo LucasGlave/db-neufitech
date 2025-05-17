@@ -35,7 +35,13 @@ export class OrganizacionesService {
         if (!org) {
             throw new NotFoundException('Organización no encontrada');
         }
-        return this.organizacionModel.update(data, { where: { id } });
+        const update = await this.organizacionModel.update(data, {
+            where: { id },
+        });
+        if (update[0] === 1) return this.organizacionModel.findByPk(id);
+        throw new BadRequestException(
+            `Failed to update Organizacion with id ${id}.`,
+        );
     }
 
     async delete(id: number) {
