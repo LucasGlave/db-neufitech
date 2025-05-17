@@ -88,7 +88,7 @@ export class ProfesionalService {
         );
         if (!profesional) {
             throw new BadRequestException(
-                `Paciente with ID ${profesionalId} does not exist`,
+                `Profesional with ID ${profesionalId} does not exist`,
             );
         }
         const assigned = await profesional.$get('pacientes');
