@@ -35,8 +35,14 @@ export class ProfesionalService {
         return profesional;
     }
 
-    update(id: number, data: any) {
-        return this.profesionalModel.update(data, { where: { id } });
+    async update(id: number, data: any) {
+        const update = await this.profesionalModel.update(data, {
+            where: { id },
+        });
+        if (update[0] === 1) return this.profesionalModel.findByPk(id);
+        throw new BadRequestException(
+            `Failed to update Profesional with id ${id}.`,
+        );
     }
 
     delete(id: number) {
@@ -71,5 +77,26 @@ export class ProfesionalService {
         }
         await profesional.$add('pacientes', pacienteId);
         return { message: 'Paciente assigned to Profesional successfully' };
+    }
+
+    async getProfesionalAsiggns(profesionalId: number) {
+        const profesional = await this.profesionalModel.findByPk(
+            profesionalId,
+            {
+                include: { all: true },
+            },
+        );
+        if (!profesional) {
+            throw new BadRequestException(
+                `Paciente with ID ${profesionalId} does not exist`,
+            );
+        }
+        const assigned = await profesional.$get('pacientes');
+        if (!assigned || assigned.length === 0) {
+            throw new BadRequestException(
+                `No pacientes assigned to Paciente ${profesionalId}`,
+            );
+        }
+        return assigned;
     }
 }

@@ -20,8 +20,8 @@ export class Origen extends Model {
 
     @ForeignKey(() => Paciente)
     @Column
-    paciente_id: number; // Add the foreign key column
+    paciente_id: number;
 
     @BelongsTo(() => Paciente)
-    paciente: Paciente; // Define the relationship with Paciente
+    paciente: Paciente;
 }

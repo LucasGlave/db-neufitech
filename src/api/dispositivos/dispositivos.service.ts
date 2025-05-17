@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { Dispositivo } from '../../common/entities/dispositivo.entity';
 import { DispositivoType } from 'src/common/types/dispositivo.types'; // Updated path
@@ -22,8 +22,14 @@ export class DispositivoService {
         return this.dispositivoModel.create(data as Partial<Dispositivo>);
     }
 
-    update(id: number, data: DispositivoType) {
-        return this.dispositivoModel.update(data, { where: { id } });
+    async update(id: number, data: DispositivoType) {
+        const update = await this.dispositivoModel.update(data, {
+            where: { id },
+        });
+        if (update[0] === 1) return this.dispositivoModel.findByPk(id);
+        throw new BadRequestException(
+            `Failed to update Dispositivo with id ${id}.`,
+        );
     }
 
     delete(id: number) {

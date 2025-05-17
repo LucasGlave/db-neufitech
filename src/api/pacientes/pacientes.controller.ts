@@ -49,6 +49,11 @@ export class PacienteController {
         return this.pacienteService.asignarProfesional(+id, body.profesionalId);
     }
 
+    @Get(':id/asignado')
+    getPacientesAsiggns(@Param('id') id: string) {
+        return this.pacienteService.getPacientesAsiggns(+id);
+    }
+
     @Post(':id/datos-contacto')
     async addDatosContacto(@Param('id') pacienteId: number, @Body() body) {
         validateRequiredFields(body, datosContactoFields);

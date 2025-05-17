@@ -9,7 +9,5 @@ export const seedObraSocial = async () => {
             { nombre: 'PAMI' },
         ]);
         console.log('[✔] ObraSocial seed done');
-    } else {
-        console.log('[i] ObraSocial already seeded');
     }
 };

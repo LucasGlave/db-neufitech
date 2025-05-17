@@ -20,6 +20,6 @@ import { Origen } from 'src/common/entities/origen.entity';
     ],
     controllers: [PacienteController],
     providers: [PacienteService],
-    exports: [PacienteService],
+    exports: [PacienteService], // Export PacienteService
 })
 export class PacienteModule {}

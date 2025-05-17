@@ -8,7 +8,5 @@ export const seedPropietario = async () => {
             tipo: 'paciente',
         });
         console.log('[✔] Propietario seed done');
-    } else {
-        console.log('[i] Propietario already seeded');
     }
 };

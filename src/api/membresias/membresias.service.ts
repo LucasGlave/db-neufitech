@@ -46,8 +46,11 @@ export class MembresiaService {
         return this.membresiaModel.create(data as Partial<Membresia>);
     }
 
-    update(id: number, data: MembresiaType) {
-        return this.membresiaModel.update(data, { where: { id } });
+    async update(id: number, data: MembresiaType) {
+        const update = await this.membresiaModel.update(data, {
+            where: { id },
+        });
+        if (update[0] === 1) return this.membresiaModel.findByPk(id);
     }
 
     async patch(id: number, data: any) {
@@ -68,7 +71,13 @@ export class MembresiaService {
             throw new BadRequestException('Membresia not found');
         }
         Object.assign(cambio, data);
-        return this.membresiaModel.update(cambio, { where: { id } });
+        const update = await this.membresiaModel.update(cambio, {
+            where: { id },
+        });
+        if (update[0] === 1) return this.membresiaModel.findByPk(id);
+        throw new BadRequestException(
+            `Failed to update Membresia with id ${id}.`,
+        );
     }
 
     delete(id: number) {

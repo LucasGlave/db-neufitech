@@ -7,7 +7,7 @@ export class ObraSocial extends Model {
     declare id: number;
 
     @Column
-    nombre: string;
+    declare nombre: string;
 
     @HasMany(() => Paciente)
     pacientes: Paciente[];
