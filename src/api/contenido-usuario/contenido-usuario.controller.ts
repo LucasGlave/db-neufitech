@@ -28,25 +28,17 @@ export class ContenidoUsuarioController {
         return this.contenidoUsuarioService.findOne(id);
     }
 
-    @Get('propietario/:id/tipo-propietario/:tipo_propietario')
-    async findByUser(
-        @Param('id') id: number,
-        @Param('tipo_propietario') tipo_propietario: string,
-    ) {
-        return this.contenidoUsuarioService.findByUser(id, tipo_propietario);
+    @Get('propietario/:id')
+    async findByUser(@Param('id') id: number) {
+        return this.contenidoUsuarioService.findByUser(id);
     }
 
-    @Get('propietario/:id/tipo-propietario/:tipo_propietario/contenido/:tipo')
+    @Get('propietario/:id/:tipo')
     async findByUserAndType(
         @Param('id') id: number,
         @Param('tipo') tipo: string,
-        @Param('tipo_propietario') tipo_propietario: string,
     ) {
-        return this.contenidoUsuarioService.findByUserAndType(
-            id,
-            tipo_propietario,
-            tipo,
-        );
+        return this.contenidoUsuarioService.findByUserAndType(id, tipo);
     }
 
     @Post()
@@ -55,14 +47,14 @@ export class ContenidoUsuarioController {
         return this.contenidoUsuarioService.create(body);
     }
 
-    @Put()
-    update(@Body() body) {
+    @Put(':id')
+    update(@Param('id') id: number, @Body() body) {
         validateRequiredFields(body, contenidoUsuarioFields);
-        return this.contenidoUsuarioService.update(body);
+        return this.contenidoUsuarioService.update(id, body);
     }
 
-    @Delete()
-    delete(@Body() body) {
-        return this.contenidoUsuarioService.delete(body);
+    @Delete(':id')
+    delete(@Param('id') id: number) {
+        return this.contenidoUsuarioService.delete(id);
     }
 }
