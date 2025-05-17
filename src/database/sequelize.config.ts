@@ -16,6 +16,7 @@ import { SolicitudDeCambio } from 'src/common/entities/solicitudCambio.entity';
 import { TipoDispositivo } from 'src/common/entities/tipoDispositivo.entity';
 import { Programa } from 'src/common/entities/programa.entity';
 import { PacienteProfesional } from '../common/entities/pacienteProfesional.entity';
+import { Capacitador } from 'src/common/entities/capacitador.entity';
 
 export const sequelizeConfig: SequelizeModuleOptions = {
     dialect: 'postgres',
@@ -26,6 +27,7 @@ export const sequelizeConfig: SequelizeModuleOptions = {
     database: process.env.DB_NAME || 'neufitech',
     models: [
         Capacitacion,
+        Capacitador,
         ContenidoUsuario,
         DatosContacto,
         Dispositivo,

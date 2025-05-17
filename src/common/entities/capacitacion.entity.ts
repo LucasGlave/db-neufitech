@@ -6,14 +6,19 @@ import {
     ForeignKey,
     BelongsTo,
 } from 'sequelize-typescript';
+import { Capacitador } from './capacitador.entity';
 
 @Table({ tableName: 'capacitacion' })
 export class Capacitacion extends Model {
     @Column({ primaryKey: true, autoIncrement: true })
     declare id: number;
 
+    @ForeignKey(() => Capacitador)
     @Column
-    capacitador: string;
+    capacitador_id: number;
+
+    @BelongsTo(() => Capacitador)
+    capacitador: Capacitador;
 
     @Column(DataType.DATE)
     fecha: Date;

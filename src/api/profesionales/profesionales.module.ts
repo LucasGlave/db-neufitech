@@ -7,9 +7,9 @@ import { Propietario } from 'src/common/entities/propietario.entity';
 import { Paciente } from 'src/common/entities/paciente.entity';
 
 @Module({
-    imports: [SequelizeModule.forFeature([Profesional, Propietario, Paciente])], // Register the Profesional model
+    imports: [SequelizeModule.forFeature([Profesional, Propietario, Paciente])],
     controllers: [ProfesionalesController],
     providers: [ProfesionalService],
-    exports: [ProfesionalService], // Export if needed in other modules
+    exports: [ProfesionalService],
 })
 export class ProfesionalesModule {}

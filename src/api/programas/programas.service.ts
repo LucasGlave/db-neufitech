@@ -32,8 +32,12 @@ export class ProgramaService {
         return this.programaModel.create(data as Partial<Programa>);
     }
 
-    update(id: number, data: ProgramaType) {
-        return this.programaModel.update(data, { where: { id } });
+    async update(id: number, data: ProgramaType) {
+        const update = await this.programaModel.update(data, { where: { id } });
+        if (update[0] === 1) return this.programaModel.findByPk(id);
+        throw new BadRequestException(
+            `Failed to update Programas with id ${id}.`,
+        );
     }
 
     delete(id: number) {

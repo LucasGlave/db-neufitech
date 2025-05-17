@@ -46,4 +46,9 @@ export class ProfesionalesController {
     asignarProfesional(@Param('id') id: string, @Body() body) {
         return this.profesionalService.asignarPaciente(+id, body.pacienteId);
     }
+
+    @Get(':id/asignado')
+    getProfesionalAsiggns(@Param('id') id: string) {
+        return this.profesionalService.getProfesionalAsiggns(+id);
+    }
 }

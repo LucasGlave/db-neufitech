@@ -43,8 +43,12 @@ export class PacienteService {
         return paciente;
     }
 
-    update(id: number, data: PacienteType) {
-        return this.pacienteModel.update(data, { where: { id } });
+    async update(id: number, data: PacienteType) {
+        const update = await this.pacienteModel.update(data, { where: { id } });
+        if (update[0] === 1) return this.pacienteModel.findByPk(id);
+        throw new BadRequestException(
+            `Failed to update Paciente with id ${id}.`,
+        );
     }
 
     delete(id: number) {
@@ -78,6 +82,24 @@ export class PacienteService {
         return { message: 'Profesional assigned to Paciente successfully' };
     }
 
+    async getPacientesAsiggns(pacienteId: number) {
+        const paciente = await this.pacienteModel.findByPk(pacienteId, {
+            include: { all: true },
+        });
+        if (!paciente) {
+            throw new BadRequestException(
+                `Paciente with ID ${pacienteId} does not exist`,
+            );
+        }
+        const assigned = await paciente.$get('profesionales');
+        if (!assigned || assigned.length === 0) {
+            throw new BadRequestException(
+                `No profesionales assigned to Paciente ${pacienteId}`,
+            );
+        }
+        return assigned;
+    }
+
     async addDatosContacto(pacienteId: number, data: any) {
         const paciente = await this.pacienteModel.findByPk(pacienteId);
         if (!paciente) {
@@ -100,7 +122,12 @@ export class PacienteService {
                 `DatosContacto for Paciente ID ${pacienteId} does not exist`,
             );
         }
-        return datosContacto.update(data);
+        const update = await datosContacto.update(data);
+        if (update[0] === 1)
+            return this.datosContactoModel.findOne({
+                where: { paciente_id: pacienteId },
+            });
+        throw new BadRequestException(`Failed to update Datos contacto.`);
     }
 
     async getDatosContacto(pacienteId: number) {
@@ -138,28 +165,8 @@ export class PacienteService {
                 `Paciente with ID ${pacienteId} already has an origen with ID ${paciente.dataValues.origen_id}`,
             );
         }
-        if (data.tipo === 'profesional') {
-            let profesional = await this.profesionalModel.findByPk(
-                data.foreign_key,
-            );
-            if (!profesional) {
-                throw new BadRequestException(
-                    `Profesional with ID ${data.foreign_key} does not exist`,
-                );
-            }
-        } else if (data.tipo === 'organizacion') {
-            let organizacion = await this.profesionalModel.findByPk(
-                data.foreign_key,
-            );
-            if (!organizacion) {
-                throw new BadRequestException(
-                    `Organizacion with ID ${data.foreign_key} does not exist`,
-                );
-            }
-        }
-        if (paciente.dataValues.origen_id) {
-            throw new BadRequestException(`Pacient`);
-        }
+
+        await this.validateTipoOrigen(data.tipo, data.foreign_key);
 
         const origen = await this.origenModel.create({
             ...data,
@@ -187,25 +194,7 @@ export class PacienteService {
                 `Paciente with ID ${pacienteId} does not have an origen`,
             );
         }
-        if (data.tipo === 'profesional') {
-            let profesional = await this.profesionalModel.findByPk(
-                data.foreign_key,
-            );
-            if (!profesional) {
-                throw new BadRequestException(
-                    `Profesional with ID ${data.foreign_key} does not exist`,
-                );
-            }
-        } else if (data.tipo === 'organizacion') {
-            let organizacion = await this.profesionalModel.findByPk(
-                data.foreign_key,
-            );
-            if (!organizacion) {
-                throw new BadRequestException(
-                    `Organizacion with ID ${data.foreign_key} does not exist`,
-                );
-            }
-        }
+        await this.validateTipoOrigen(data.tipo, data.foreign_key);
         const origen = await this.origenModel.findOne({
             where: { paciente_id: pacienteId },
         });
@@ -214,7 +203,12 @@ export class PacienteService {
                 `Origen for Paciente ID ${pacienteId} does not exist`,
             );
         }
-        return origen.update(data);
+        const update = await origen.update(data);
+        if (update[0] === 1)
+            return this.origenModel.findOne({
+                where: { paciente_id: pacienteId },
+            });
+        throw new BadRequestException(`Failed to update Origen.`);
     }
 
     async getOrigen(pacienteId: number) {
@@ -240,5 +234,30 @@ export class PacienteService {
         }
 
         return origen.destroy();
+    }
+
+    private async validateTipoOrigen(
+        tipo: string,
+        foreign_key: number,
+    ): Promise<void> {
+        if (tipo === 'profesional') {
+            const profesional =
+                await this.profesionalModel.findByPk(foreign_key);
+            if (!profesional) {
+                throw new BadRequestException(
+                    `Profesional with ID ${foreign_key} does not exist`,
+                );
+            }
+        } else if (tipo === 'organizacion') {
+            const organizacion =
+                await this.profesionalModel.findByPk(foreign_key);
+            if (!organizacion) {
+                throw new BadRequestException(
+                    `Organizacion with ID ${foreign_key} does not exist`,
+                );
+            }
+        } else {
+            throw new BadRequestException(`Invalid tipo: ${tipo}`);
+        }
     }
 }

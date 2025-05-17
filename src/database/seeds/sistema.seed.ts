@@ -8,7 +8,5 @@ export const seedSistema = async () => {
             nombre: 'Default Sistema',
         });
         console.log('[✔] Sistema seed done');
-    } else {
-        console.log('[i] Sistema already seeded');
     }
 };

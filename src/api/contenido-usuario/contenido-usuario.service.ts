@@ -64,7 +64,6 @@ export class ContenidoUsuarioService {
                 `No se encontró el propietario con id ${data.propietario_id} y rol ${data.tipo_propietario}.`,
             );
         }
-        // Check for duplicate ContenidoUsuario
         const existing = await this.contenidoUsuarioModel.findOne({
             where: {
                 propietario_id: propietario.id,
@@ -95,12 +94,20 @@ export class ContenidoUsuarioService {
                 `No se encontró el propietario con id ${data.propietario_id} y rol ${data.tipo_propietario}.`,
             );
         }
-        return this.contenidoUsuarioModel.update(data, {
+        const update = await this.contenidoUsuarioModel.update(data, {
             where: {
                 propietario_id: propietario.id,
                 tipo: data.tipo,
             },
         });
+        if (update[0] === 1)
+            return this.contenidoUsuarioModel.findOne({
+                where: {
+                    propietario_id: propietario.id,
+                    tipo: data.tipo,
+                },
+            });
+        throw new BadRequestException(`Failed to update Contenido usuario.`);
     }
 
     async delete(data: {

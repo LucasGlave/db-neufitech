@@ -5,10 +5,11 @@ import { SolicitudDeCambioService } from './solicitudes-cambio.service';
 import { SolicitudDeCambioController } from './solicitudes-cambio.controller';
 import { PacienteModule } from '../pacientes/pacientes.module';
 import { ProfesionalesModule } from '../profesionales/profesionales.module';
+import { PacienteProfesional } from 'src/common/entities/pacienteProfesional.entity';
 
 @Module({
     imports: [
-        SequelizeModule.forFeature([SolicitudDeCambio]),
+        SequelizeModule.forFeature([SolicitudDeCambio, PacienteProfesional]),
         PacienteModule,
         ProfesionalesModule,
     ],

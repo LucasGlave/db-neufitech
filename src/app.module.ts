@@ -18,6 +18,7 @@ import { TiposDispositivosModule } from './api/tipos-dispositivos/tipos-disposit
 import { ObraSocial } from './common/entities/obraSocial.entity';
 import { SeederService } from './database/seeder.service';
 import { ProgramasModule } from './api/programas/programas.module';
+import { CapacitadoresModule } from './api/capacitadores/capacitadores.module';
 
 @Module({
     imports: [
@@ -29,6 +30,7 @@ import { ProgramasModule } from './api/programas/programas.module';
         MembresiasModule,
         SistemasModule,
         CapacitacionesModule,
+        CapacitadoresModule,
         ContenidoUsuarioModule,
         DispositivosInteraccionModule,
         SolicitudesCambioModule,
