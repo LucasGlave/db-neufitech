@@ -6,14 +6,15 @@ import {
     Param,
     Put,
     Delete,
+    Patch,
 } from '@nestjs/common';
-import { OrganizacionService } from './organizaciones.service';
+import { OrganizacionesService } from './organizaciones.service';
 import { organizacionFields } from 'src/common/types/organizacion.types';
 import { validateRequiredFields } from 'src/utils/validateFields';
 
 @Controller('organizaciones')
 export class OrganizacionesController {
-    constructor(private readonly organizacionService: OrganizacionService) {}
+    constructor(private readonly organizacionService: OrganizacionesService) {}
 
     @Get()
     findAll() {
@@ -40,5 +41,10 @@ export class OrganizacionesController {
     @Delete(':id')
     delete(@Param('id') id: string) {
         return this.organizacionService.delete(+id);
+    }
+
+    @Patch(':id')
+    patch(@Param('id') id: string, @Body() body) {
+        return this.organizacionService.patch(+id, body);
     }
 }
