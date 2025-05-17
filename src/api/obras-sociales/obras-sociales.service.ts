@@ -23,6 +23,12 @@ export class ObraSocialService {
     }
 
     async update(id: number, data: ObraSocialType) {
+        const obra = await this.obraSocialModel.findByPk(id);
+        if (!obra) {
+            throw new BadRequestException(
+                `Obra social con id ${id} no encontrada.`,
+            );
+        }
         const update = await this.obraSocialModel.update(data, {
             where: { id },
         });
@@ -32,7 +38,13 @@ export class ObraSocialService {
         );
     }
 
-    delete(id: number) {
+    async delete(id: number) {
+        const obra = await this.obraSocialModel.findByPk(id);
+        if (!obra) {
+            throw new BadRequestException(
+                `Obra social con id ${id} no encontrada.`,
+            );
+        }
         return this.obraSocialModel.destroy({ where: { id } });
     }
 }
