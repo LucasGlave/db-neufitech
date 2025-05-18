@@ -60,6 +60,14 @@ export class ContenidoUsuarioService {
                 `No se encontró el propietario con id ${data.propietario_id}.`,
             );
         }
+        const existingTipoContenido = await this.contenidoUsuarioModel.findOne({
+            where: { propietario_id: data.propietario_id, tipo: data.tipo },
+        });
+        if (existingTipoContenido) {
+            throw new BadRequestException(
+                `Ya existe un contenido con el tipo ${data.tipo} para el propietario con id ${data.propietario_id}.`,
+            );
+        }
         return this.contenidoUsuarioModel.create({
             contenido: data.contenido,
             propietario_id: propietario.id,
