@@ -75,9 +75,10 @@ export class ContenidoUsuarioService {
         });
     }
 
-    async update(id: number, data: ContenidoUsuarioType) {
+    async update(data: ContenidoUsuarioType) {
         validateEnum(data.tipo, enumFieldsTipos);
-        let propietario = await this.propietarioModel.findByPk(
+
+        const propietario = await this.propietarioModel.findByPk(
             data.propietario_id,
         );
         if (!propietario) {
@@ -85,11 +86,21 @@ export class ContenidoUsuarioService {
                 `No se encontró el propietario con id ${data.propietario_id}.`,
             );
         }
-        const update = await this.contenidoUsuarioModel.update(data, {
-            where: { id },
+
+        const contenido = await this.contenidoUsuarioModel.findOne({
+            where: { propietario_id: data.propietario_id, tipo: data.tipo },
         });
-        if (update[0] === 1) return this.contenidoUsuarioModel.findByPk(id);
-        throw new BadRequestException(`Failed to update Contenido usuario.`);
+
+        if (!contenido) {
+            throw new BadRequestException(
+                `No se encontró contenido con el tipo "${data.tipo}" para el propietario con id ${data.propietario_id}.`,
+            );
+        }
+        const update = await contenido.update({
+            contenido: data.contenido,
+        });
+        console.log('update', update);
+        return update[0] === 1;
     }
 
     async delete(id: number) {
