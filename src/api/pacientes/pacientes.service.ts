@@ -91,13 +91,13 @@ export class PacienteService {
                 `Paciente with ID ${pacienteId} does not exist`,
             );
         }
-        const assigned = await paciente.$get('profesionales');
-        if (!assigned || assigned.length === 0) {
+        const assigns = await paciente.$get('profesionales');
+        if (!assigns || assigns.length === 0) {
             throw new BadRequestException(
                 `No profesionales assigned to Paciente ${pacienteId}`,
             );
         }
-        return assigned;
+        return assigns;
     }
 
     async addDatosContacto(pacienteId: number, data: any) {
