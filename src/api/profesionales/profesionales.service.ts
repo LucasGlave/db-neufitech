@@ -28,11 +28,15 @@ export class ProfesionalService {
         const profesional = await this.profesionalModel.create(
             data as Partial<Profesional>,
         );
-        await this.propietarioModel.create({
+        const propietario = await this.propietarioModel.create({
             tipo: 'profesional',
             foreign_key: profesional.id,
         });
-        return profesional;
+        const update = await this.profesionalModel.update(
+            { ...profesional, propietario_id: propietario.id },
+            { where: { id: profesional.id } },
+        );
+        return update[0] === 1;
     }
 
     async update(id: number, data: any) {

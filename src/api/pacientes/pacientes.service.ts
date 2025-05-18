@@ -36,11 +36,15 @@ export class PacienteService {
         const paciente = await this.pacienteModel.create(
             data as Partial<Paciente>,
         );
-        await this.propietarioModel.create({
+        const propietario = await this.propietarioModel.create({
             tipo: 'paciente',
             foreign_key: paciente.id,
         });
-        return paciente;
+        const update = await this.pacienteModel.update(
+            { ...paciente, propietario_id: propietario.id },
+            { where: { id: paciente.id } },
+        );
+        return update[0] === 1;
     }
 
     async update(id: number, data: PacienteType) {
