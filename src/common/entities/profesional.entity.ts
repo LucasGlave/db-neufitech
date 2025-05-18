@@ -11,6 +11,7 @@ import { Organizacion } from './organizacion.entity';
 import { Paciente } from './paciente.entity';
 import { SolicitudDeCambio } from './solicitudCambio.entity';
 import { PacienteProfesional } from './pacienteProfesional.entity';
+import { Propietario } from './propietario.entity';
 
 @Table({ tableName: 'profesional' })
 export class Profesional extends Model {
@@ -41,6 +42,10 @@ export class Profesional extends Model {
     @ForeignKey(() => Organizacion)
     @Column
     organizacion_id: number;
+
+    @ForeignKey(() => Propietario)
+    @Column
+    propietario_id: number;
 
     @BelongsTo(() => Organizacion)
     organizacion: Organizacion;
