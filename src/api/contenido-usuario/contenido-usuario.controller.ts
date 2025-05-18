@@ -47,10 +47,10 @@ export class ContenidoUsuarioController {
         return this.contenidoUsuarioService.create(body);
     }
 
-    @Put(':id')
-    update(@Param('id') id: number, @Body() body) {
+    @Put()
+    update(@Body() body) {
         validateRequiredFields(body, contenidoUsuarioFields);
-        return this.contenidoUsuarioService.update(id, body);
+        return this.contenidoUsuarioService.update(body);
     }
 
     @Delete(':id')
