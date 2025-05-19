@@ -4,6 +4,7 @@ import {
     Model,
     ForeignKey,
     BelongsTo,
+    DataType,
 } from 'sequelize-typescript';
 import { Profesional } from './profesional.entity';
 import { Paciente } from './paciente.entity';
@@ -27,7 +28,7 @@ export class SolicitudDeCambio extends Model {
     @Column
     metodo: string; // agregar, eliminar, modificar
 
-    @Column
+    @Column(DataType.TEXT)
     contenido: string;
 
     @Column({ defaultValue: 'pendiente' }) // pendiente, aceptado, rechazado
