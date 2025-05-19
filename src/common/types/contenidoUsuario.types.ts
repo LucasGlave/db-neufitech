@@ -7,4 +7,4 @@ export interface ContenidoUsuarioType {
 
 export const contenidoUsuarioFields = ['propietario_id', 'tipo', 'contenido'];
 
-export const enumFieldsTipos = ['rutas', 'rutinas', 'notas'];
+export const enumFieldsTipos = ['rutas', 'rutinas', 'notas', 'categorias'];
