@@ -34,6 +34,9 @@ export class Profesional extends Model {
     especialización: string;
 
     @Column
+    documento: number;
+
+    @Column
     email: string;
 
     @Column

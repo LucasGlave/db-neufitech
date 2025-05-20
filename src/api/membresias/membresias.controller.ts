@@ -10,6 +10,7 @@ import {
 } from '@nestjs/common';
 import { MembresiaService } from './membresias.service';
 import {
+    membresiaCheckFields,
     membresiaFields,
     membresiaFieldsPatch,
 } from 'src/common/types/membresia.types';
@@ -38,10 +39,16 @@ export class MembresiasController {
         return this.membresiaService.create(body);
     }
 
-    @Put(':id')
+    @Put('/update/:id')
     update(@Param('id') id: string, @Body() body) {
         validateRequiredFields(body, membresiaFields);
         return this.membresiaService.update(+id, body);
+    }
+
+    @Put('check-active')
+    check(@Body() body) {
+        validateRequiredFields(body, membresiaCheckFields);
+        return this.membresiaService.check(body);
     }
 
     @Patch(':id')

@@ -1,11 +1,4 @@
-import {
-    Table,
-    Column,
-    Model,
-    BelongsTo,
-    ForeignKey,
-} from 'sequelize-typescript';
-import { Membresia } from './membresia.entity';
+import { Table, Column, Model } from 'sequelize-typescript';
 
 @Table({ tableName: 'programa' })
 export class Programa extends Model {
