@@ -45,9 +45,15 @@ export class ContenidoUsuarioService {
                 `No se encontró el propietario con id ${id}.`,
             );
         }
-        return this.contenidoUsuarioModel.findAll({
+        const response = await this.contenidoUsuarioModel.findAll({
             where: { propietario_id: id, tipo: tipo },
         });
+        if (response) {
+            return response[0].contenido;
+        }
+        throw new BadRequestException(
+            `No se encontró el contenido con id ${id}.`,
+        );
     }
 
     async create(data: ContenidoUsuarioType) {
@@ -99,7 +105,7 @@ export class ContenidoUsuarioService {
         const update = await contenido.update({
             contenido: data.contenido,
         });
-        console.log('update', update);
+        console.log('update', update.contenido);
         return update[0] === 1;
     }
 
