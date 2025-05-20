@@ -68,9 +68,6 @@ export class Paciente extends Model {
     @HasMany(() => DatosContacto)
     datosContacto: DatosContacto[];
 
-    @HasOne(() => Membresia)
-    membresia: Membresia;
-
     @BelongsToMany(() => Profesional, () => PacienteProfesional)
     profesionales: Profesional[];
 

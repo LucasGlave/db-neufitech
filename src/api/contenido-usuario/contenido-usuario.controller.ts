@@ -9,7 +9,10 @@ import {
     Patch,
 } from '@nestjs/common';
 import { ContenidoUsuarioService } from './contenido-usuario.service';
-import { contenidoUsuarioFields } from 'src/common/types/contenidoUsuario.types';
+import {
+    contenidoUsuarioFields,
+    createDefaultsFields,
+} from 'src/common/types/contenidoUsuario.types';
 import { validateRequiredFields } from 'src/utils/validateFields';
 
 @Controller('contenido-usuario')
@@ -45,6 +48,12 @@ export class ContenidoUsuarioController {
     create(@Body() body) {
         validateRequiredFields(body, contenidoUsuarioFields);
         return this.contenidoUsuarioService.create(body);
+    }
+
+    @Post('create-defaults/:id')
+    createDefaults(@Param('id') id: number, @Body() body) {
+        validateRequiredFields(body, createDefaultsFields);
+        return this.contenidoUsuarioService.createDefaults(id, body);
     }
 
     @Put()

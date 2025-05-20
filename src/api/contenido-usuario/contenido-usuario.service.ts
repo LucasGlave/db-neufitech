@@ -69,10 +69,73 @@ export class ContenidoUsuarioService {
             );
         }
         return this.contenidoUsuarioModel.create({
-            contenido: data.contenido,
+            contenido: JSON.stringify(data.contenido),
             propietario_id: propietario.id,
             tipo: data.tipo,
         });
+    }
+
+    async createDefaults(id: number, data: { categorias: string }) {
+        try {
+            let propietario = await this.propietarioModel.findByPk(id);
+            if (!propietario) {
+                throw new BadRequestException(
+                    `No se encontró el propietario con id ${id}.`,
+                );
+            }
+            const tipos = [
+                {
+                    tipo: 'categorias',
+                    contenido: JSON.stringify(data.categorias),
+                },
+                { tipo: 'rutas', contenido: '[]' },
+                { tipo: 'rutinas', contenido: '[]' },
+                { tipo: 'notas', contenido: '[]' },
+            ];
+            const results: Array<
+                | { tipo: string; created: true; id: number }
+                | { tipo: string; created: false; reason: string }
+                | { tipo: string; created: false; error: string }
+            > = [];
+            for (const entry of tipos) {
+                try {
+                    const exists = await this.contenidoUsuarioModel.findOne({
+                        where: { propietario_id: id, tipo: entry.tipo },
+                    });
+                    if (!exists) {
+                        const created = await this.contenidoUsuarioModel.create(
+                            {
+                                contenido: entry.contenido,
+                                propietario_id: id,
+                                tipo: entry.tipo,
+                            },
+                        );
+                        results.push({
+                            tipo: entry.tipo,
+                            created: true,
+                            id: created.id,
+                        });
+                    } else {
+                        results.push({
+                            tipo: entry.tipo,
+                            created: false,
+                            reason: 'Ya existe',
+                        });
+                    }
+                } catch (err) {
+                    results.push({
+                        tipo: entry.tipo,
+                        created: false,
+                        error: err.message,
+                    });
+                }
+            }
+            return results;
+        } catch (err) {
+            return {
+                error: err.message || 'Error inesperado al crear defaults.',
+            };
+        }
     }
 
     async update(data: ContenidoUsuarioType) {
@@ -97,7 +160,7 @@ export class ContenidoUsuarioService {
             );
         }
         const update = await contenido.update({
-            contenido: data.contenido,
+            contenido: JSON.stringify(data.contenido),
         });
         console.log('update', update);
         return update[0] === 1;

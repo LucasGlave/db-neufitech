@@ -1,13 +1,8 @@
-import {
-    Table,
-    Column,
-    Model,
-    HasMany,
-    ForeignKey,
-} from 'sequelize-typescript';
+import { Table, Column, Model, HasMany, HasOne } from 'sequelize-typescript';
 import { DispositivoDeInteraccion } from './dispositivoInteraccion.entity';
 import { ContenidoUsuario } from './contenidoUsuario.entity';
 import { Dispositivo } from './dispositivo.entity';
+import { Membresia } from './membresia.entity';
 
 @Table({ tableName: 'propietario' })
 export class Propietario extends Model {
@@ -28,4 +23,7 @@ export class Propietario extends Model {
 
     @HasMany(() => ContenidoUsuario)
     contenidos: ContenidoUsuario;
+
+    @HasOne(() => Membresia)
+    membresia: Membresia;
 }

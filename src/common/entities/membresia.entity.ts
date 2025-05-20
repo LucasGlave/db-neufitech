@@ -5,11 +5,9 @@ import {
     ForeignKey,
     BelongsTo,
     DataType,
-    HasMany,
 } from 'sequelize-typescript';
-import { Paciente } from './paciente.entity';
+import { Propietario } from './propietario.entity';
 import { Sistema } from './sistema.entity';
-import { Programa } from './programa.entity';
 
 @Table({ tableName: 'membresia' })
 export class Membresia extends Model {
@@ -19,9 +17,9 @@ export class Membresia extends Model {
     @Column({ defaultValue: false })
     verificado: boolean;
 
-    @ForeignKey(() => Paciente)
+    @ForeignKey(() => Propietario)
     @Column
-    id_paciente: number;
+    id_propietario: number;
 
     @Column({ type: DataType.ARRAY(DataType.INTEGER), defaultValue: [] })
     programaIds: number[];
@@ -29,9 +27,6 @@ export class Membresia extends Model {
     @ForeignKey(() => Sistema)
     @Column
     id_sistema: number;
-
-    @BelongsTo(() => Paciente)
-    paciente: Paciente;
 
     @BelongsTo(() => Sistema)
     sistema: Sistema;
