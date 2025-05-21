@@ -6,7 +6,7 @@ export interface MembresiaType {
     programaIds: number[];
 }
 
-export const membresiaFields = ['propietario_id', 'id_sistema'];
+export const membresiaFields = ['id_propietario', 'id_sistema'];
 export const membresiaCheckFields = [
     'documento',
     'nombre_sistema',
