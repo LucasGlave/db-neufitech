@@ -49,7 +49,7 @@ export class ContenidoUsuarioService {
             where: { propietario_id: id, tipo: tipo },
         });
         if (response) {
-            return response[0].contenido;
+            return response[0].dataValues.contenido;
         }
         throw new BadRequestException(
             `No se encontró el contenido con id ${id}.`,
@@ -75,7 +75,7 @@ export class ContenidoUsuarioService {
             );
         }
         return this.contenidoUsuarioModel.create({
-            contenido: JSON.stringify(data.contenido),
+            contenido: data.contenido,
             propietario_id: propietario.id,
             tipo: data.tipo,
         });
@@ -92,7 +92,7 @@ export class ContenidoUsuarioService {
             const tipos = [
                 {
                     tipo: 'categorias',
-                    contenido: JSON.stringify(data.categorias),
+                    contenido: data.categorias,
                 },
                 { tipo: 'rutas', contenido: '[]' },
                 { tipo: 'rutinas', contenido: '[]' },
@@ -166,7 +166,7 @@ export class ContenidoUsuarioService {
             );
         }
         const update = await contenido.update({
-            contenido: JSON.stringify(data.contenido),
+            contenido: data.contenido,
         });
         console.log('update', update.contenido);
         return update[0] === 1;
