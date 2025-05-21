@@ -95,7 +95,10 @@ export class ContenidoUsuarioService {
                     contenido: JSON.stringify(data.categorias),
                 },
                 { tipo: 'rutas', contenido: '[]' },
-                { tipo: 'rutinas', contenido: '[]' },
+                {
+                    tipo: 'rutinas',
+                    contenido: `{"dailyRoutine": [], "weeklyRoutine": [], "monthlyRoutine": [], "specificRoutine": []}`,
+                },
                 { tipo: 'notas', contenido: '[]' },
             ];
             const results: Array<
