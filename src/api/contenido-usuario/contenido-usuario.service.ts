@@ -48,11 +48,11 @@ export class ContenidoUsuarioService {
         const response = await this.contenidoUsuarioModel.findAll({
             where: { propietario_id: id, tipo: tipo },
         });
-        if (response[0]) {
-            return response[0].dataValues.contenido;
+        if (response && response.length > 0) {
+            return response;
         }
         throw new BadRequestException(
-            `No se encontró el contenido con id ${id}.`,
+            `No se encontró contenido con tipo "${tipo}" para el propietario con id ${id}.`,
         );
     }
 
