@@ -19,14 +19,14 @@ export class Membresia extends Model {
 
     @ForeignKey(() => Propietario)
     @Column
-    id_propietario: number;
+    propietario_id: number;
 
     @Column({ type: DataType.ARRAY(DataType.INTEGER), defaultValue: [] })
     programaIds: number[];
 
     @ForeignKey(() => Sistema)
     @Column
-    id_sistema: number;
+    sistema_id: number;
 
     @BelongsTo(() => Sistema)
     sistema: Sistema;
