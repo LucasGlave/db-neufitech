@@ -48,7 +48,7 @@ export class ContenidoUsuarioService {
         const response = await this.contenidoUsuarioModel.findAll({
             where: { propietario_id: id, tipo: tipo },
         });
-        if (response) {
+        if (response[0]) {
             return response[0].dataValues.contenido;
         }
         throw new BadRequestException(
