@@ -45,9 +45,15 @@ export class ContenidoUsuarioService {
                 `No se encontró el propietario con id ${id}.`,
             );
         }
-        return this.contenidoUsuarioModel.findAll({
+        const response = await this.contenidoUsuarioModel.findAll({
             where: { propietario_id: id, tipo: tipo },
         });
+        if (response && response.length > 0) {
+            return response;
+        }
+        throw new BadRequestException(
+            `No se encontró contenido con tipo "${tipo}" para el propietario con id ${id}.`,
+        );
     }
 
     async create(data: ContenidoUsuarioType) {
@@ -69,7 +75,7 @@ export class ContenidoUsuarioService {
             );
         }
         return this.contenidoUsuarioModel.create({
-            contenido: JSON.stringify(data.contenido),
+            contenido: data.contenido,
             propietario_id: propietario.id,
             tipo: data.tipo,
         });
@@ -86,7 +92,7 @@ export class ContenidoUsuarioService {
             const tipos = [
                 {
                     tipo: 'categorias',
-                    contenido: JSON.stringify(data.categorias),
+                    contenido: data.categorias,
                 },
                 { tipo: 'rutas', contenido: '[]' },
                 {
@@ -163,9 +169,9 @@ export class ContenidoUsuarioService {
             );
         }
         const update = await contenido.update({
-            contenido: JSON.stringify(data.contenido),
+            contenido: data.contenido,
         });
-        console.log('update', update);
+        console.log('update', update.contenido);
         return update[0] === 1;
     }
 
