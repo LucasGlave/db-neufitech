@@ -35,10 +35,10 @@ export class MembresiaService {
     }
 
     async create(data: MembresiaType) {
-        const sistema = await this.sistemaModel.findByPk(data.id_sistema);
+        const sistema = await this.sistemaModel.findByPk(data.sistema_id);
         if (!sistema) {
             throw new BadRequestException(
-                'Invalid id_sistema: Sistema does not exist',
+                'Invalid sistema_id: Sistema does not exist',
             );
         }
         if (data.programaIds) {
@@ -77,7 +77,7 @@ export class MembresiaService {
         if (paciente) {
             const propietario_id = paciente.dataValues.propietario_id;
             const membresia = await this.membresiaModel.findOne({
-                where: { id_propietario: propietario_id },
+                where: { propietario_id: propietario_id },
             });
             if (!membresia) {
                 throw new BadRequestException(
@@ -87,7 +87,7 @@ export class MembresiaService {
             // Check sistema if required
             if (data.nombre_sistema || data.version_sistema) {
                 const sistema = await this.sistemaModel.findByPk(
-                    membresia.dataValues.id_sistema,
+                    membresia.dataValues.sistema_id,
                 );
                 if (!sistema) {
                     throw new BadRequestException(
@@ -124,7 +124,7 @@ export class MembresiaService {
         if (profesional) {
             const propietario_id = profesional.dataValues.propietario_id;
             const membresia = await this.membresiaModel.findOne({
-                where: { id_propietario: propietario_id },
+                where: { propietario_id: propietario_id },
             });
             if (!membresia) {
                 throw new BadRequestException(
@@ -134,7 +134,7 @@ export class MembresiaService {
             // Check sistema if required
             if (data.nombre_sistema || data.version_sistema) {
                 const sistema = await this.sistemaModel.findByPk(
-                    membresia.dataValues.id_sistema,
+                    membresia.dataValues.sistema_id,
                 );
                 if (!sistema) {
                     throw new BadRequestException(

@@ -15,6 +15,7 @@ export const seedPaciente = async () => {
                 diagnostico: 'ELA',
                 origen_id: 1,
                 obra_social_id: 1,
+                propietario_id: 1,
             },
         ]);
         console.log('[✔] Paciente seed done');

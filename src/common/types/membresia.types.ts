@@ -1,12 +1,12 @@
 export interface MembresiaType {
     id: number;
     verificado: boolean;
-    id_propietario: number;
-    id_sistema: number;
+    propietario_id: number;
+    sistema_id: number;
     programaIds: number[];
 }
 
-export const membresiaFields = ['propietario_id', 'id_sistema'];
+export const membresiaFields = ['propietario_id', 'sistema_id'];
 export const membresiaCheckFields = [
     'documento',
     'nombre_sistema',
