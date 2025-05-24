@@ -110,13 +110,20 @@ export class MembresiaService {
                     'La membresía ya está verificada.',
                 );
             }
-            membresia.set('verificado', true);
-            await membresia.save();
-            await membresia.reload();
-            return {
-                usuario: { tipo: 'paciente', ...paciente.toJSON() },
-                membresia: membresia.toJSON(),
-            };
+            if (propietario_id > 2) {
+                membresia.set('verificado', true);
+                await membresia.save();
+                await membresia.reload();
+                return {
+                    usuario: { tipo: 'paciente', ...paciente.toJSON() },
+                    membresia: membresia.toJSON(),
+                };
+            } else {
+                return {
+                    usuario: { tipo: 'paciente', ...paciente.toJSON() },
+                    membresia: { ...membresia.toJSON(), verificado: false },
+                };
+            }
         }
         const profesional = await this.profesionalModel.findOne({
             where: { documento: data.documento },
@@ -157,13 +164,20 @@ export class MembresiaService {
                     'La membresía ya está verificada.',
                 );
             }
-            membresia.set('verificado', true);
-            await membresia.save();
-            await membresia.reload();
-            return {
-                usuario: { tipo: 'profesional', ...profesional.toJSON() },
-                membresia: membresia.toJSON(),
-            };
+            if (propietario_id > 2) {
+                membresia.set('verificado', true);
+                await membresia.save();
+                await membresia.reload();
+                return {
+                    usuario: { tipo: 'profesional', ...profesional.toJSON() },
+                    membresia: membresia.toJSON(),
+                };
+            } else {
+                return {
+                    usuario: { tipo: 'profesional', ...profesional.toJSON() },
+                    membresia: { ...membresia.toJSON(), verificado: false },
+                };
+            }
         }
         throw new BadRequestException(
             'No se encontró paciente ni profesional con ese documento.',
