@@ -16,7 +16,12 @@ export const SolicitudDeCambioFields = [
     'contenido',
 ];
 
-export const SolicitudDeCambioTipoEnum = ['ruta', 'rutina', 'nota'];
+export const SolicitudDeCambioTipoEnum = [
+    'ruta',
+    'rutina',
+    'nota',
+    'categorias',
+];
 
 export const SolicitudDeCambioEstadoEnum = [
     'aceptado',
