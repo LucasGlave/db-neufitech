@@ -105,12 +105,12 @@ export class MembresiaService {
                     );
                 }
             }
-            if (membresia.dataValues.verificado) {
-                throw new UnauthorizedException(
-                    'La membresía ya está verificada.',
-                );
-            }
             if (propietario_id > 2) {
+                if (membresia.dataValues.verificado) {
+                    throw new UnauthorizedException(
+                        'La membresía ya está verificada.',
+                    );
+                }
                 membresia.set('verificado', true);
                 await membresia.save();
                 await membresia.reload();
@@ -121,7 +121,7 @@ export class MembresiaService {
             } else {
                 return {
                     usuario: { tipo: 'paciente', ...paciente.toJSON() },
-                    membresia: { ...membresia.toJSON(), verificado: false },
+                    membresia: { ...membresia.toJSON(), verificado: true },
                 };
             }
         }
@@ -159,12 +159,12 @@ export class MembresiaService {
                     );
                 }
             }
-            if (membresia.dataValues.verificado) {
-                throw new UnauthorizedException(
-                    'La membresía ya está verificada.',
-                );
-            }
             if (propietario_id > 2) {
+                if (membresia.dataValues.verificado) {
+                    throw new UnauthorizedException(
+                        'La membresía ya está verificada.',
+                    );
+                }
                 membresia.set('verificado', true);
                 await membresia.save();
                 await membresia.reload();
@@ -175,7 +175,7 @@ export class MembresiaService {
             } else {
                 return {
                     usuario: { tipo: 'profesional', ...profesional.toJSON() },
-                    membresia: { ...membresia.toJSON(), verificado: false },
+                    membresia: { ...membresia.toJSON(), verificado: true },
                 };
             }
         }
