@@ -65,45 +65,55 @@ export class MembresiaService {
 
     async check(data: {
         documento: number;
-        nombre_sistema?: string;
-        version_sistema?: string;
+        nombre_sistema: string;
+        version_sistema: string;
     }) {
+        console.log('data', data);
         if (!data.documento) {
             throw new BadRequestException('El campo documento es requerido.');
+        }
+        const sistema = await this.sistemaModel.findOne({
+            where: {
+                nombre: data.nombre_sistema,
+                version: data.version_sistema,
+            },
+        });
+        console.log('sistema', sistema);
+        if (!sistema) {
+            throw new BadRequestException(
+                'No se encontró el sistema proporcionado.',
+            );
         }
         const paciente = await this.pacienteModel.findOne({
             where: { documento: data.documento },
         });
+        console.log('paciente', paciente);
         if (paciente) {
             const propietario_id = paciente.dataValues.propietario_id;
-            const membresia = await this.membresiaModel.findOne({
+            const membresias = await this.membresiaModel.findAndCountAll({
                 where: { propietario_id: propietario_id },
             });
-            if (!membresia) {
+            console.log('membresias', membresias);
+            if (membresias.count == 0) {
                 throw new BadRequestException(
-                    'No se encontró membresía para el propietario.',
+                    'El paciente no tiene membresías vinculadas.',
                 );
             }
-            // Check sistema if required
-            if (data.nombre_sistema || data.version_sistema) {
-                const sistema = await this.sistemaModel.findByPk(
-                    membresia.dataValues.sistema_id,
-                );
-                if (!sistema) {
-                    throw new BadRequestException(
-                        'No se encontró el sistema vinculado a la membresía.',
-                    );
-                }
+            let membresia: Membresia | null = null;
+            for (const m of membresias.rows) {
                 if (
-                    (data.nombre_sistema &&
-                        sistema.dataValues.nombre !== data.nombre_sistema) ||
-                    (data.version_sistema &&
-                        sistema.dataValues.version !== data.version_sistema)
+                    sistema &&
+                    sistema.dataValues.id === m.dataValues.sistema_id
                 ) {
-                    throw new BadRequestException(
-                        'El sistema vinculado no coincide con los datos proporcionados.',
-                    );
+                    membresia = m;
+                    break;
                 }
+            }
+            console.log('membresia', membresia);
+            if (!membresia) {
+                throw new BadRequestException(
+                    'El paciente no tiene una membresía vinculada al sistema proporcionado.',
+                );
             }
             if (propietario_id > 2) {
                 if (membresia.dataValues.verificado) {
@@ -130,34 +140,28 @@ export class MembresiaService {
         });
         if (profesional) {
             const propietario_id = profesional.dataValues.propietario_id;
-            const membresia = await this.membresiaModel.findOne({
+            const membresias = await this.membresiaModel.findAndCountAll({
                 where: { propietario_id: propietario_id },
             });
-            if (!membresia) {
+            if (membresias.count > 0) {
                 throw new BadRequestException(
-                    'No se encontró membresía para el propietario.',
+                    'El profesional no tiene membresías vinculadas.',
                 );
             }
-            // Check sistema if required
-            if (data.nombre_sistema || data.version_sistema) {
-                const sistema = await this.sistemaModel.findByPk(
-                    membresia.dataValues.sistema_id,
-                );
-                if (!sistema) {
-                    throw new BadRequestException(
-                        'No se encontró el sistema vinculado a la membresía.',
-                    );
-                }
+            let membresia: Membresia | null = null;
+            for (const m of membresias.rows) {
                 if (
-                    (data.nombre_sistema &&
-                        sistema.dataValues.nombre !== data.nombre_sistema) ||
-                    (data.version_sistema &&
-                        sistema.dataValues.version !== data.version_sistema)
+                    sistema &&
+                    sistema.dataValues.id === m.dataValues.sistema_id
                 ) {
-                    throw new BadRequestException(
-                        'El sistema vinculado no coincide con los datos proporcionados.',
-                    );
+                    membresia = m;
+                    break;
                 }
+            }
+            if (!membresia) {
+                throw new BadRequestException(
+                    'El profesional no tiene una membresía vinculada al sistema proporcionado.',
+                );
             }
             if (propietario_id > 2) {
                 if (membresia.dataValues.verificado) {
