@@ -68,7 +68,6 @@ export class MembresiaService {
         nombre_sistema: string;
         version_sistema: string;
     }) {
-        console.log('data', data);
         if (!data.documento) {
             throw new BadRequestException('El campo documento es requerido.');
         }
@@ -78,7 +77,6 @@ export class MembresiaService {
                 version: data.version_sistema,
             },
         });
-        console.log('sistema', sistema);
         if (!sistema) {
             throw new BadRequestException(
                 'No se encontró el sistema proporcionado.',
@@ -87,13 +85,11 @@ export class MembresiaService {
         const paciente = await this.pacienteModel.findOne({
             where: { documento: data.documento },
         });
-        console.log('paciente', paciente);
         if (paciente) {
             const propietario_id = paciente.dataValues.propietario_id;
             const membresias = await this.membresiaModel.findAndCountAll({
                 where: { propietario_id: propietario_id },
             });
-            console.log('membresias', membresias);
             if (membresias.count == 0) {
                 throw new BadRequestException(
                     'El paciente no tiene membresías vinculadas.',
@@ -109,7 +105,6 @@ export class MembresiaService {
                     break;
                 }
             }
-            console.log('membresia', membresia);
             if (!membresia) {
                 throw new BadRequestException(
                     'El paciente no tiene una membresía vinculada al sistema proporcionado.',
