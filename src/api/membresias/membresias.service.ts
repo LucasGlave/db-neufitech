@@ -138,7 +138,7 @@ export class MembresiaService {
             const membresias = await this.membresiaModel.findAndCountAll({
                 where: { propietario_id: propietario_id },
             });
-            if (membresias.count > 0) {
+            if (membresias.count == 0) {
                 throw new BadRequestException(
                     'El profesional no tiene membresías vinculadas.',
                 );
