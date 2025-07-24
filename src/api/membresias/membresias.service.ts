@@ -10,6 +10,7 @@ import { Programa } from '../../common/entities/programa.entity';
 import { MembresiaType } from 'src/common/types/membresia.types';
 import { Paciente } from 'src/common/entities/paciente.entity';
 import { Profesional } from 'src/common/entities/profesional.entity';
+import { DispositivoDeInteraccion } from 'src/common/entities/dispositivoInteraccion.entity';
 
 @Injectable()
 export class MembresiaService {
@@ -24,6 +25,8 @@ export class MembresiaService {
         private readonly pacienteModel: typeof Paciente,
         @InjectModel(Profesional)
         private readonly profesionalModel: typeof Profesional,
+        @InjectModel(DispositivoDeInteraccion)
+        private readonly dispositivoInteraccionModel: typeof DispositivoDeInteraccion,
     ) {}
 
     findAll() {
@@ -119,14 +122,29 @@ export class MembresiaService {
                 membresia.set('verificado', true);
                 await membresia.save();
                 await membresia.reload();
+
+                // Fetch dispositivos de interacción
+                const dispositivos =
+                    await this.dispositivoInteraccionModel.findAll({
+                        where: { propietario_id: propietario_id },
+                    });
+
                 return {
                     usuario: { tipo: 'paciente', ...paciente.toJSON() },
                     membresia: membresia.toJSON(),
+                    dispositivos: dispositivos.map((d) => d.toJSON()),
                 };
             } else {
+                // Fetch dispositivos de interacción
+                const dispositivos =
+                    await this.dispositivoInteraccionModel.findAll({
+                        where: { propietario_id: propietario_id },
+                    });
+
                 return {
                     usuario: { tipo: 'paciente', ...paciente.toJSON() },
                     membresia: { ...membresia.toJSON(), verificado: true },
+                    dispositivos: dispositivos.map((d) => d.toJSON()),
                 };
             }
         }
@@ -167,14 +185,29 @@ export class MembresiaService {
                 membresia.set('verificado', true);
                 await membresia.save();
                 await membresia.reload();
+
+                // Fetch dispositivos de interacción
+                const dispositivos =
+                    await this.dispositivoInteraccionModel.findAll({
+                        where: { propietario_id: propietario_id },
+                    });
+
                 return {
                     usuario: { tipo: 'profesional', ...profesional.toJSON() },
                     membresia: membresia.toJSON(),
+                    dispositivos: dispositivos.map((d) => d.toJSON()),
                 };
             } else {
+                // Fetch dispositivos de interacción
+                const dispositivos =
+                    await this.dispositivoInteraccionModel.findAll({
+                        where: { propietario_id: propietario_id },
+                    });
+
                 return {
                     usuario: { tipo: 'profesional', ...profesional.toJSON() },
                     membresia: { ...membresia.toJSON(), verificado: true },
+                    dispositivos: dispositivos.map((d) => d.toJSON()),
                 };
             }
         }
