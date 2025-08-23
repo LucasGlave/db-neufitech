@@ -4,6 +4,7 @@ import { Profesional } from '../../common/entities/profesional.entity';
 import { Propietario } from '../../common/entities/propietario.entity';
 import { ProfesionalType } from 'src/common/types/profesional.types';
 import { Paciente } from 'src/common/entities/paciente.entity';
+import { Op } from 'sequelize';
 
 @Injectable()
 export class ProfesionalService {
@@ -16,8 +17,79 @@ export class ProfesionalService {
         private readonly pacienteModel: typeof Paciente,
     ) {}
 
-    findAll() {
-        return this.profesionalModel.findAll({ order: [['id', 'ASC']] });
+    async findAll(page: number = 1, limit: number = 20) {
+        const offset = (page - 1) * limit;
+        const { count, rows } = await this.profesionalModel.findAndCountAll({
+            offset,
+            limit,
+            order: [['id', 'ASC']],
+        });
+
+        return {
+            data: rows,
+            pagination: {
+                page,
+                limit,
+                total: count,
+                totalPages: Math.ceil(count / limit),
+            },
+        };
+    }
+
+    async searchByName(name: string, page: number = 1, limit: number = 20) {
+        if (!name) {
+            throw new BadRequestException('Name parameter is required');
+        }
+
+        const offset = (page - 1) * limit;
+        const { count, rows } = await this.profesionalModel.findAndCountAll({
+            where: {
+                nombre_completo: {
+                    [Op.iLike]: `%${name}%`,
+                },
+            },
+            offset,
+            limit,
+            order: [['id', 'ASC']],
+        });
+
+        return {
+            data: rows,
+            pagination: {
+                page,
+                limit,
+                total: count,
+                totalPages: Math.ceil(count / limit),
+            },
+        };
+    }
+
+    async searchByDni(dni: string, page: number = 1, limit: number = 20) {
+        if (!dni) {
+            throw new BadRequestException('DNI parameter is required');
+        }
+
+        const offset = (page - 1) * limit;
+        const { count, rows } = await this.profesionalModel.findAndCountAll({
+            where: {
+                documento: {
+                    [Op.eq]: dni,
+                },
+            },
+            offset,
+            limit,
+            order: [['id', 'ASC']],
+        });
+
+        return {
+            data: rows,
+            pagination: {
+                page,
+                limit,
+                total: count,
+                totalPages: Math.ceil(count / limit),
+            },
+        };
     }
 
     findOne(id: number) {

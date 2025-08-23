@@ -8,6 +8,7 @@ import { DatosContacto } from '../../common/entities/datosContacto.entity';
 import { Origen } from 'src/common/entities/origen.entity';
 import { validateEnum } from 'src/utils/validateFields';
 import { origenTipo, OrigenType } from 'src/common/types/origen.types';
+import { Op } from 'sequelize';
 
 @Injectable()
 export class PacienteService {
@@ -24,8 +25,79 @@ export class PacienteService {
         private origenModel: typeof Origen,
     ) {}
 
-    findAll() {
-        return this.pacienteModel.findAll({ order: [['id', 'ASC']] });
+    async findAll(page: number = 1, limit: number = 20) {
+        const offset = (page - 1) * limit;
+        const { count, rows } = await this.pacienteModel.findAndCountAll({
+            offset,
+            limit,
+            order: [['id', 'ASC']],
+        });
+
+        return {
+            data: rows,
+            pagination: {
+                page,
+                limit,
+                total: count,
+                totalPages: Math.ceil(count / limit),
+            },
+        };
+    }
+
+    async searchByName(name: string, page: number = 1, limit: number = 20) {
+        if (!name) {
+            throw new BadRequestException('Name parameter is required');
+        }
+
+        const offset = (page - 1) * limit;
+        const { count, rows } = await this.pacienteModel.findAndCountAll({
+            where: {
+                nombre_completo: {
+                    [Op.iLike]: `%${name}%`,
+                },
+            },
+            offset,
+            limit,
+            order: [['id', 'ASC']],
+        });
+
+        return {
+            data: rows,
+            pagination: {
+                page,
+                limit,
+                total: count,
+                totalPages: Math.ceil(count / limit),
+            },
+        };
+    }
+
+    async searchByDni(dni: string, page: number = 1, limit: number = 20) {
+        if (!dni) {
+            throw new BadRequestException('DNI parameter is required');
+        }
+
+        const offset = (page - 1) * limit;
+        const { count, rows } = await this.pacienteModel.findAndCountAll({
+            where: {
+                documento: {
+                    [Op.eq]: dni,
+                },
+            },
+            offset,
+            limit,
+            order: [['id', 'ASC']],
+        });
+
+        return {
+            data: rows,
+            pagination: {
+                page,
+                limit,
+                total: count,
+                totalPages: Math.ceil(count / limit),
+            },
+        };
     }
 
     findOne(id: number) {

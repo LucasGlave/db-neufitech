@@ -34,6 +34,31 @@ export class MembresiaService {
         return this.membresiaModel.findByPk(id);
     }
 
+    async findByPropietario(propietarioId: number) {
+        if (!propietarioId) {
+            throw new BadRequestException('Propietario ID is required');
+        }
+
+        const membresias = await this.membresiaModel.findAll({
+            where: {
+                propietario_id: propietarioId,
+            },
+            include: [
+                {
+                    model: this.sistemaModel,
+                    as: 'sistema',
+                },
+            ],
+            order: [['id', 'ASC']],
+        });
+
+        return {
+            propietario_id: propietarioId,
+            total_membresias: membresias.length,
+            membresias: membresias,
+        };
+    }
+
     async create(data: MembresiaType) {
         const sistema = await this.sistemaModel.findByPk(data.sistema_id);
         if (!sistema) {
