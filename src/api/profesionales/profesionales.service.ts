@@ -32,11 +32,11 @@ export class ProfesionalService {
             tipo: 'profesional',
             foreign_key: profesional.id,
         });
-        const update = await this.profesionalModel.update(
+        await this.profesionalModel.update(
             { ...profesional, propietario_id: propietario.id },
             { where: { id: profesional.id } },
         );
-        return update[0] === 1;
+        return { ...profesional, propietario_id: propietario.id };
     }
 
     async update(id: number, data: any) {

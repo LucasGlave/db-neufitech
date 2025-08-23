@@ -40,11 +40,11 @@ export class PacienteService {
             tipo: 'paciente',
             foreign_key: paciente.id,
         });
-        const update = await this.pacienteModel.update(
+        await this.pacienteModel.update(
             { ...paciente, propietario_id: propietario.id },
             { where: { id: paciente.id } },
         );
-        return update[0] === 1;
+        return { ...paciente, propietario_id: propietario.id };
     }
 
     async update(id: number, data: PacienteType) {
