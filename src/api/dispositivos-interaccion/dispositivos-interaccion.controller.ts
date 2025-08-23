@@ -11,7 +11,7 @@ import { DispositivoInteraccionService } from './dispositivos-interaccion.servic
 import { dispositivoDeInteraccionFields } from 'src/common/types/dispositivoInteraccion.types';
 import { validateRequiredFields } from 'src/utils/validateFields';
 
-@Controller('dispositivoDeInteraccions')
+@Controller('dispositivosDeInteraccion')
 export class DispositivosInteraccionController {
     constructor(
         private readonly dispositivoDeInteraccionService: DispositivoInteraccionService,

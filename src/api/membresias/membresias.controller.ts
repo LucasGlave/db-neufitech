@@ -33,6 +33,11 @@ export class MembresiasController {
         return this.membresiaService.findOne(+id);
     }
 
+    @Get('propietario/:propietarioId')
+    async findByPropietario(@Param('propietarioId') propietarioId: string) {
+        return this.membresiaService.findByPropietario(+propietarioId);
+    }
+
     @Post()
     create(@Body() body) {
         validateRequiredFields(body, membresiaFields);

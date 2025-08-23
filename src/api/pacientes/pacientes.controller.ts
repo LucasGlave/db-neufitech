@@ -6,6 +6,7 @@ import {
     Param,
     Put,
     Delete,
+    Query,
 } from '@nestjs/common';
 import { PacienteService } from './pacientes.service';
 import { pacienteFields } from 'src/common/types/paciente.types';
@@ -18,8 +19,26 @@ export class PacienteController {
     constructor(private readonly pacienteService: PacienteService) {}
 
     @Get()
-    findAll() {
-        return this.pacienteService.findAll();
+    findAll(@Query('page') page = 1, @Query('limit') limit = 20) {
+        return this.pacienteService.findAll(+page, +limit);
+    }
+
+    @Get('search/name')
+    searchByName(
+        @Query('name') name: string,
+        @Query('page') page = 1,
+        @Query('limit') limit = 20,
+    ) {
+        return this.pacienteService.searchByName(name, +page, +limit);
+    }
+
+    @Get('search/dni')
+    searchByDni(
+        @Query('dni') dni: string,
+        @Query('page') page = 1,
+        @Query('limit') limit = 20,
+    ) {
+        return this.pacienteService.searchByDni(dni, +page, +limit);
     }
 
     @Get(':id')
