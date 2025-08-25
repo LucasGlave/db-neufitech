@@ -1,4 +1,10 @@
-import { Table, Column, Model, ForeignKey } from 'sequelize-typescript';
+import {
+    Table,
+    Column,
+    Model,
+    ForeignKey,
+    BelongsTo,
+} from 'sequelize-typescript';
 import { Paciente } from './paciente.entity';
 import { Profesional } from './profesional.entity';
 
@@ -11,4 +17,10 @@ export class PacienteProfesional extends Model {
     @ForeignKey(() => Profesional)
     @Column
     profesional_id: number;
+
+    @BelongsTo(() => Paciente, 'paciente_id')
+    paciente: Paciente;
+
+    @BelongsTo(() => Profesional, 'profesional_id')
+    profesional: Profesional;
 }
