@@ -15,6 +15,8 @@ import { ContenidoUsuarioModule } from './api/contenido-usuario/contenido-usuari
 import { DispositivosInteraccionModule } from './api/dispositivos-interaccion/dispositivos-interaccion.module';
 import { SolicitudesCambioModule } from './api/solicitudes-cambio/solicitudes-cambio.module';
 import { TiposDispositivosModule } from './api/tipos-dispositivos/tipos-dispositivos.module';
+import { PacienteProfesionalModule } from './api/paciente-profesional/paciente-profesional.module';
+import { DatosContactoModule } from './api/datos-contacto/datos-contacto.module';
 import { ObraSocial } from './common/entities/obraSocial.entity';
 import { SeederService } from './database/seeder.service';
 import { ProgramasModule } from './api/programas/programas.module';
@@ -35,6 +37,8 @@ import { CapacitadoresModule } from './api/capacitadores/capacitadores.module';
         DispositivosInteraccionModule,
         SolicitudesCambioModule,
         TiposDispositivosModule,
+        PacienteProfesionalModule,
+        DatosContactoModule,
         ProgramasModule,
         SequelizeModule.forRoot(sequelizeConfig),
         SequelizeModule.forFeature([ObraSocial]),

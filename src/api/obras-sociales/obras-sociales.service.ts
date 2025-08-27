@@ -2,6 +2,7 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { ObraSocial } from '../../common/entities/obraSocial.entity';
 import { ObraSocialType } from 'src/common/types/obraSocial.types';
+import { Op } from 'sequelize';
 
 @Injectable()
 export class ObraSocialService {
@@ -10,8 +11,51 @@ export class ObraSocialService {
         private obraSocialModel: typeof ObraSocial,
     ) {}
 
-    findAll() {
-        return this.obraSocialModel.findAll({ order: [['id', 'ASC']] });
+    async findAll(page: number = 1, limit: number = 20) {
+        const offset = (page - 1) * limit;
+        const { count, rows } = await this.obraSocialModel.findAndCountAll({
+            offset,
+            limit,
+            order: [['id', 'ASC']],
+        });
+
+        return {
+            data: rows,
+            pagination: {
+                page,
+                limit,
+                total: count,
+                totalPages: Math.ceil(count / limit),
+            },
+        };
+    }
+
+    async searchByName(name: string, page: number = 1, limit: number = 20) {
+        if (!name) {
+            throw new BadRequestException('Name parameter is required');
+        }
+
+        const offset = (page - 1) * limit;
+        const { count, rows } = await this.obraSocialModel.findAndCountAll({
+            where: {
+                nombre: {
+                    [Op.iLike]: `%${name}%`,
+                },
+            },
+            offset,
+            limit,
+            order: [['id', 'ASC']],
+        });
+
+        return {
+            data: rows,
+            pagination: {
+                page,
+                limit,
+                total: count,
+                totalPages: Math.ceil(count / limit),
+            },
+        };
     }
 
     findOne(id: number) {

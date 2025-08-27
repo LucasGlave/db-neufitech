@@ -6,8 +6,8 @@ import { DispositivosController } from './dispositivos.controller';
 
 @Module({
     imports: [SequelizeModule.forFeature([Dispositivo])],
+    controllers: [DispositivosController],
     providers: [DispositivoService],
     exports: [DispositivoService],
-    controllers: [DispositivosController],
 })
 export class DispositivosModule {}
