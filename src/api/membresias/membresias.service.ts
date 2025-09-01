@@ -11,6 +11,7 @@ import { MembresiaType } from 'src/common/types/membresia.types';
 import { Paciente } from 'src/common/entities/paciente.entity';
 import { Profesional } from 'src/common/entities/profesional.entity';
 import { DispositivoDeInteraccion } from 'src/common/entities/dispositivoInteraccion.entity';
+import { TipoDispositivo } from 'src/common/entities/tipoDispositivo.entity';
 
 @Injectable()
 export class MembresiaService {
@@ -27,6 +28,8 @@ export class MembresiaService {
         private readonly profesionalModel: typeof Profesional,
         @InjectModel(DispositivoDeInteraccion)
         private readonly dispositivoInteraccionModel: typeof DispositivoDeInteraccion,
+        @InjectModel(TipoDispositivo)
+        private readonly tipoDispositivoModel: typeof TipoDispositivo,
     ) {}
 
     findAll() {
@@ -152,24 +155,44 @@ export class MembresiaService {
                 const dispositivos =
                     await this.dispositivoInteraccionModel.findAll({
                         where: { propietario_id: propietario_id },
+                        include: [
+                            {
+                                model: this.tipoDispositivoModel,
+                                as: 'tipoDispositivo',
+                            },
+                        ],
+                        raw: true,
+                        nest: true,
                     });
-
                 return {
                     usuario: { tipo: 'paciente', ...paciente.toJSON() },
                     membresia: membresia.toJSON(),
-                    dispositivos: dispositivos.map((d) => d.toJSON()),
+                    dispositivos: dispositivos.map(
+                        (d) => d.tipoDispositivo?.tipo ?? null,
+                    ),
                 };
             } else {
                 // Fetch dispositivos de interacción
                 const dispositivos =
                     await this.dispositivoInteraccionModel.findAll({
                         where: { propietario_id: propietario_id },
+                        include: [
+                            {
+                                model: this.tipoDispositivoModel,
+                                as: 'tipoDispositivo',
+                            },
+                        ],
+                        raw: true,
+                        nest: true,
                     });
+                console.log('dispositivos de interaccion', dispositivos);
 
                 return {
                     usuario: { tipo: 'paciente', ...paciente.toJSON() },
                     membresia: { ...membresia.toJSON(), verificado: true },
-                    dispositivos: dispositivos.map((d) => d.toJSON()),
+                    dispositivos: dispositivos.map(
+                        (d) => d.tipoDispositivo?.tipo ?? null,
+                    ),
                 };
             }
         }
@@ -215,24 +238,44 @@ export class MembresiaService {
                 const dispositivos =
                     await this.dispositivoInteraccionModel.findAll({
                         where: { propietario_id: propietario_id },
+                        include: [
+                            {
+                                model: this.tipoDispositivoModel,
+                                as: 'tipoDispositivo',
+                            },
+                        ],
+                        raw: true,
+                        nest: true,
                     });
 
                 return {
                     usuario: { tipo: 'profesional', ...profesional.toJSON() },
                     membresia: membresia.toJSON(),
-                    dispositivos: dispositivos.map((d) => d.toJSON()),
+                    dispositivos: dispositivos.map(
+                        (d) => d.tipoDispositivo?.tipo ?? null,
+                    ),
                 };
             } else {
                 // Fetch dispositivos de interacción
                 const dispositivos =
                     await this.dispositivoInteraccionModel.findAll({
                         where: { propietario_id: propietario_id },
+                        include: [
+                            {
+                                model: this.tipoDispositivoModel,
+                                as: 'tipoDispositivo',
+                            },
+                        ],
+                        raw: true,
+                        nest: true,
                     });
 
                 return {
                     usuario: { tipo: 'profesional', ...profesional.toJSON() },
                     membresia: { ...membresia.toJSON(), verificado: true },
-                    dispositivos: dispositivos.map((d) => d.toJSON()),
+                    dispositivos: dispositivos.map(
+                        (d) => d.tipoDispositivo?.tipo ?? null,
+                    ),
                 };
             }
         }

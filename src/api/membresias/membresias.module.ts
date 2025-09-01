@@ -8,6 +8,7 @@ import { Programa } from 'src/common/entities/programa.entity';
 import { Paciente } from 'src/common/entities/paciente.entity';
 import { Profesional } from 'src/common/entities/profesional.entity';
 import { DispositivoDeInteraccion } from 'src/common/entities/dispositivoInteraccion.entity';
+import { TipoDispositivo } from 'src/common/entities/tipoDispositivo.entity';
 
 @Module({
     imports: [
@@ -18,6 +19,7 @@ import { DispositivoDeInteraccion } from 'src/common/entities/dispositivoInterac
             Paciente,
             Profesional,
             DispositivoDeInteraccion,
+            TipoDispositivo,
         ]),
     ],
     controllers: [MembresiasController],
